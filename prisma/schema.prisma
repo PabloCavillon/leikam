@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Addresses {
+  id          String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  street      String  @db.VarChar(255)
+  number      String  @db.VarChar(10)
+  floor       String? @db.VarChar(10)
+  apartment   String? @db.VarChar(10)
+  city        String  @db.VarChar(255)
+  state       String  @db.VarChar(255)
+  postal_code String  @db.VarChar(20)
+}
+
+model Attributes {
+  id         String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  color      String? @db.VarChar(50)
+  brand      String? @db.VarChar(255)
+  dimensions String? @db.VarChar(255)
+  weight     Float?  @db.Float
+  definition Int?
+  channels   Int?
+}
+
+model Clients {
+  id         String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  address_id String  @db.Char(36)
+  user_id    String? @unique(map: "user_id") @db.Char(36)
+  first_name String  @db.VarChar(255)
+  last_name  String  @db.VarChar(255)
+  phone      String? @db.VarChar(20)
+  email      String? @db.VarChar(255)
+
+  @@index([address_id], map: "address_id")
+}
+
+model Kits {
+  id          String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name        String  @unique(map: "name_UNIQUE") @db.VarChar(255)
+  slug        String  @unique(map: "slug_UNIQUE") @db.VarChar(255)
+  description String? @db.Text
+  price       Float   @db.Float
+}
+
+model Product_Images {
+  id         String @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  product_id String @db.Char(36)
+  image_url  String @db.VarChar(255)
+
+  @@index([product_id], map: "product_id")
+}
+
+model Products {
+  id              String @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name            String @unique(map: "name_UNIQUE") @db.VarChar(255)
+  slug            String @unique(map: "slug_UNIQUE") @db.VarChar(255)
+  model           String @db.VarChar(255)
+  description     String @db.Text
+  price           Float  @db.Float
+  current_stock   Int
+  category        String @db.VarChar(255)
+  warranty_period Int?
+  attribute_id    String @db.Char(36)
+
+  @@index([attribute_id], map: "attribute_id")
+}
+
+model Products_Kits {
+  id         String @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  kit_id     String @db.Char(36)
+  product_id String @db.Char(36)
+  quantity   Int
+
+  @@index([kit_id], map: "kit_id")
+  @@index([product_id], map: "product_id")
+}
+
+model Quote_Details {
+  id         String @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  quote_id   String @db.Char(36)
+  product_id String @db.Char(36)
+  quantity   Int
+  unit_price Float  @db.Float
+
+  @@index([product_id], map: "product_id")
+  @@index([quote_id], map: "quote_id")
+}
+
+model Quotes {
+  id            String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  client_id     String   @db.Char(36)
+  creation_date DateTime @default(now()) @db.DateTime(0)
+  total_amount  Float    @db.Float
+  dolar_value   Float    @db.Float
+
+  @@index([client_id], map: "client_id")
+}
+
+model Technicians {
+  id               String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  address_id       String   @db.Char(36)
+  user_id          String?  @unique(map: "user_id") @db.Char(36)
+  first_name       String   @db.VarChar(255)
+  last_name        String   @db.VarChar(255)
+  phone            String?  @db.VarChar(20)
+  email            String?  @db.VarChar(255)
+  skills           String?  @db.Text
+  dni              String   @db.VarChar(20)
+  criminal_records Boolean? @default(false)
+
+  @@index([address_id], map: "address_id")
+}
+
+model Technicians_Work_Orders {
+  id            String @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  work_order_id String @db.Char(36)
+  technician_id String @db.Char(36)
+  client_note   Int?   @db.TinyInt
+
+  @@index([technician_id], map: "technician_id")
+  @@index([work_order_id], map: "work_order_id")
+}
+
+model Users {
+  id       String     @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  username String     @unique(map: "username") @db.VarChar(255)
+  password String     @db.VarChar(255)
+  role     Users_role
+  active   Boolean?   @default(true)
+}
+
+model Work_Orders {
+  id            String             @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  client_id     String             @db.Char(36)
+  creation_date DateTime           @default(now()) @db.DateTime(0)
+  status        Work_Orders_status
+  comments      String?            @db.Text
+  work_note     Int?               @db.TinyInt
+
+  @@index([client_id], map: "client_id")
+}
+
+enum Work_Orders_status {
+  Pending
+  In_Progress @map("In Progress")
+  Completed
+  Canceled
+}
+
+enum Users_role {
+  Admin
+  Technician
+  Client
+  God
+}
