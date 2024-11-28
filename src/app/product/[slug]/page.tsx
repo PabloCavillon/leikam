@@ -44,9 +44,11 @@ export default async function ProductPage({params}: Props){
 	}
   	
 	return (
-    	<div>
+    	<div className="w-screen justify-items-center">
       		<h1>Product Page</h1>
-			<ProductForm product={product} />
+			<div className="w-4/5 block">
+				<ProductForm product={product} />
+			</div>
     	</div>
   	);
 }
