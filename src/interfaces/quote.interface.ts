@@ -7,5 +7,6 @@ export interface Quote {
     creationDate: Date;
     totalAmount: number;
     dolarValue: number;
+    slug: string;
     products: QuoteDetail[];
 }

@@ -4,6 +4,8 @@ export * from './attributes/get-attributes-by-id';
 // products
 export * from './products/create-product';
 export * from './products/get-all-products';
+export * from './products/get-product-by-id'
+export * from './products/get-product-by-slug'
 
 
 // technicians

@@ -2,10 +2,10 @@ export const revalidate = 604800; //7 días
 
 import { notFound } from "next/navigation";
 
-import { getProductBySlug } from "@/actions/products/get-product-by-slug";
 import { Metadata, ResolvingMetadata } from "next";
 import { ProductForm } from "./ui/product-form";
 import { Product } from "@/interfaces";
+import { getProductBySlug } from "@/actions";
 
 interface Props {
 	params: {
@@ -13,7 +13,7 @@ interface Props {
 	}
 }
 
-export async function generateMetada (
+export async function generateMetadata (
 	{params}: Props,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
@@ -35,7 +35,7 @@ export async function generateMetada (
 
 export default async function ProductPage({params}: Props){
 	
-	const { slug } = await params;
+	const { slug } = params;
 
 	const product:Product|null = await getProductBySlug(slug);
 

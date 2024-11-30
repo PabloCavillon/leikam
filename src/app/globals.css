@@ -61,3 +61,10 @@ body {
 .btn-disabled {
   @apply bg-gray-600 text-white py-2 px-4 rounded transition-all;
 }
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Desactiva el estilo predeterminado */
+    opacity: 1; /* Asegura que las flechas sean visibles */
+    display: inline-block; /* Asegura que se muestren siempre */
+}

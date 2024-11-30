@@ -87,6 +87,7 @@ model Quote_Details {
   product_id String @db.Char(36)
   quantity   Int
   unit_price Float  @db.Float
+  labor_cost Float  @db.Float
 
   @@index([product_id], map: "product_id")
   @@index([quote_id], map: "quote_id")
@@ -98,6 +99,7 @@ model Quotes {
   creation_date DateTime @default(now()) @db.DateTime(0)
   total_amount  Float    @db.Float
   dolar_value   Float    @db.Float
+  slug          String   @db.VarChar(255)
 
   @@index([client_id], map: "client_id")
 }

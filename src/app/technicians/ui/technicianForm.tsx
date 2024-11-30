@@ -1,8 +1,5 @@
 "use client"
 
-import clsx from "clsx";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 type FormInputs = {
