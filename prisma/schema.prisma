@@ -87,21 +87,9 @@ model Quote_Details {
   product_id String @db.Char(36)
   quantity   Int
   unit_price Float  @db.Float
-  labor_cost Float  @db.Float
 
   @@index([product_id], map: "product_id")
   @@index([quote_id], map: "quote_id")
-}
-
-model Quotes {
-  id            String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  client_id     String   @db.Char(36)
-  creation_date DateTime @default(now()) @db.DateTime(0)
-  total_amount  Float    @db.Float
-  dolar_value   Float    @db.Float
-  slug          String   @db.VarChar(255)
-
-  @@index([client_id], map: "client_id")
 }
 
 model Technicians {
@@ -146,6 +134,19 @@ model Work_Orders {
   work_note     Int?               @db.TinyInt
 
   @@index([client_id], map: "client_id")
+}
+
+model quotes {
+  id            String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id       String?  @db.Char(36)
+  creation_date DateTime @default(now()) @db.DateTime(0)
+  total_amount  Float    @db.Float
+  slug          String   @db.VarChar(255)
+  dolar_value   Float    @db.Float
+  labor_cost    Float    @default(0) @db.Float
+  deposit       Float    @default(0) @db.Float
+
+  @@index([user_id], map: "fk_user_id")
 }
 
 enum Work_Orders_status {

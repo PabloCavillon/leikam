@@ -1,9 +1,9 @@
-export const formatNumber = (number: number): string => {
+export const formatNumber = (number: number, cantDecimal: number): string => {
 
     const formattedNumber = new Intl.NumberFormat('es-ES', {
         style: 'decimal',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        minimumFractionDigits: cantDecimal,
+        maximumFractionDigits: cantDecimal
     }).format(number);
 
     return formattedNumber

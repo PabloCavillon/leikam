@@ -7,6 +7,9 @@ export * from './products/get-all-products';
 export * from './products/get-product-by-id'
 export * from './products/get-product-by-slug'
 
+// quotes
+export * from './quotes/create-quote'
+export * from './quotes/create-quote-details';
 
 // technicians
 export * from './technicians/create-technician';
