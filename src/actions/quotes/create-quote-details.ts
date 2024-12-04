@@ -5,15 +5,13 @@ import { getProductById } from "../products/get-product-by-id";
 export const createQuoteDetails = async (idQuote:string, quantities: {[id:string]: number}) => {
     
     try {
-        let quoteDetails = [];
-
         for (const id in quantities) {
 
             const quantity = quantities[id];
 
             const product = await getProductById(id);
 
-            const quoteDetail = await prisma.quote_Details.create({
+            await prisma.quote_Details.create({
                 data:{
                     quote_id: idQuote,
                     product_id: id,

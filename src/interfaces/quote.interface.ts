@@ -8,7 +8,7 @@ export interface Quote {
     totalAmount: number;
     dolarValue: number;
     slug: string;
-    labor_cost:number;
+    laborCost:number;
     deposit:number;
-    products: QuoteDetail[];
+    details: QuoteDetail[];
 }

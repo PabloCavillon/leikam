@@ -24,7 +24,7 @@ export const PageNotFound = () => {
 
       <div className="px-5 mx-5">
         <Image
-          src="/imgs/starman_750x750.png"
+          src="/imgs/starman_750x750.svg"
           alt="Starman"
           className="p-5 sm:p-0"
           width={ 550 }

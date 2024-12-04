@@ -5,11 +5,11 @@ import Link from "next/link";
 import { Product } from "@/interfaces";
 import { useProductStore } from "@/store";
 
-interface TableProductsProps {
-    products: Product[]; // El tipo de 'products' es un array de 'Product'
+interface Props {
+    products: Product[];
 }
 
-export const TableProducts =  ({ products }: TableProductsProps) => {
+export const TableProducts =  ({ products }: Props) => {
 
     const productList = useProductStore(state => state.productsList);
     const addProductToList  = useProductStore(state => state.addProductToList);

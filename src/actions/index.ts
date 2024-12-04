@@ -10,6 +10,7 @@ export * from './products/get-product-by-slug'
 // quotes
 export * from './quotes/create-quote'
 export * from './quotes/create-quote-details';
+export * from './quotes/get-quote-by-slug'
 
 // technicians
 export * from './technicians/create-technician';

@@ -23,13 +23,13 @@ export const TopMenu = () => {
         <div className="hidden sm:block">
           <Link
             className="m-2 p-2 rounded-md transition-all hover:bg-gray-100 hover:text-black"
-            href="quotes"
+            href="/quotes"
           >
             Presupuestos
           </Link>
           <Link
             className="m-2 p-2 rounded-md transition-all hover:bg-gray-100  hover:text-black"
-            href="workOrder"
+            href="/workOrder"
           >
             Ordenes de Trabajo
           </Link>

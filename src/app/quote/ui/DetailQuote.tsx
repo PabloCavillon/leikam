@@ -5,10 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { InputEditableProduct } from './InputEditableProduct';
 import { formatNumber } from '@/util';
 import { useDolarValue } from '@/store';
-import { Product, Quote } from '@/interfaces';
+import { Product } from '@/interfaces';
 import { InputEditable } from '@/components';
 import { createQuote, createQuoteDetails, getProductById } from '@/actions';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 interface Props {
     productDetails: Product[];
@@ -91,7 +92,9 @@ export const DetailQuote = ({ productDetails }: Props) => {
 
         const resp = await createQuoteDetails(id, quantities)
 
-        console.log(resp.ok)
+        if (resp) {
+            redirect(`/quote/${slug}`)
+        }
         
     }
 

@@ -1,7 +1,6 @@
 'use server'
 
 import prisma from "@/lib/prisma";
-import { createQuoteDetails } from "./create-quote-details";
 
 interface Props {
     deposit: number, 

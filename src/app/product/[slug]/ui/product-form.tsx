@@ -1,8 +1,9 @@
 'use client'
 
-import { Product } from "@/interfaces"
 import clsx from "clsx"
 import { useForm } from "react-hook-form"
+
+import { Product } from "@/interfaces"
 
 type FormInputs = {
     description: string,
