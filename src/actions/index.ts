@@ -9,8 +9,12 @@ export * from './products/get-product-by-slug'
 
 // quotes
 export * from './quotes/create-quote'
-export * from './quotes/create-quote-details';
 export * from './quotes/get-quote-by-slug'
+export * from './quotes/get-all-quotes'
+
+// quote details
+export * from './quotes-details/create-quote-details';
+export * from './quotes-details/get-all-details-by-quote-id'
 
 // technicians
 export * from './technicians/create-technician';

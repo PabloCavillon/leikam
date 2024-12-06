@@ -1,4 +1,3 @@
-import { Decimal } from '@prisma/client/runtime/library';
 import { Attribute } from './attribute.interface';
 
 export interface Product {

@@ -1,8 +1,13 @@
+import { gettAllQuotes } from "@/actions";
+import TableQuotes from "./ui/TableQuotes";
 
-export default function PresupuestoPage() {
+export default async function PresupuestoPage() {
+  
+  const quotes = await gettAllQuotes();
+
   return (
     <div>
-      <h1>Hello Page</h1>
+      <TableQuotes quotes={quotes}/>
     </div>
   );
 }

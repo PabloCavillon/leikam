@@ -12,10 +12,11 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 interface Props {
-    productDetails: Product[];
+    productDetails: Product[],
+    reset: () => void
 }
 
-export const DetailQuote = ({ productDetails }: Props) => {
+export const DetailQuote = ({ productDetails, reset }: Props) => {
     const dolarValue = useDolarValue(state => state.dolarValue);
     const updateDolarValue = useDolarValue(state => state.updateDolarValue);
 
@@ -93,6 +94,7 @@ export const DetailQuote = ({ productDetails }: Props) => {
         const resp = await createQuoteDetails(id, quantities)
 
         if (resp) {
+            reset()
             redirect(`/quote/${slug}`)
         }
         

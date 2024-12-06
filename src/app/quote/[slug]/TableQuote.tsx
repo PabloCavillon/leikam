@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
 
 import { Quote } from '@/interfaces'
@@ -16,8 +16,8 @@ export const TableQuote = ({quote}: Props) => {
     const tableRef = useRef<HTMLDivElement>(null)
 
     const filasAdicionales = [];
-    if (quote.details.length < 18) {
-        for (let i = 1; i <= 19 - quote.details.length ; i++) {
+    if (quote.details.length < 15) {
+        for (let i = 1; i <= 15 - quote.details.length ; i++) {
             filasAdicionales.push(
                 <tr key={`extra-${i}`}  className={clsx({ "bg-orange-200":(i%2!==0), "bg-transparent":(i%2===0) })}>
                     <td colSpan={4} className="text-center text-gray-400 border-r-2 border-l-2 border-custom-orange">
@@ -28,7 +28,6 @@ export const TableQuote = ({quote}: Props) => {
         }
     }
 
-   
 	const handleExportJPG = async () => {
 		if (tableRef.current) {
             try {
@@ -47,10 +46,14 @@ export const TableQuote = ({quote}: Props) => {
         }
 	};
 
+    const handleCreateWorkOrder = async () => {
+        alert('Esta funcion todavia no esta implementada ♥')
+    }
+
   return (
-    <>
-        <div ref={tableRef} className="flex w-full justify-center pt-5 min-h-[90vh]">
-        <table className="w-3/5 max-h-fit">
+    <div className='flex w-full justify-center items-center flex-col '>
+        <div ref={tableRef} className="w-3/5 min-h-[80vh] p-5">
+        <table className="w-full max-h-fit">
             <thead>
                 <tr>
                     <td colSpan={4}>
@@ -130,9 +133,12 @@ export const TableQuote = ({quote}: Props) => {
                 </tr>
             </tfoot>
         </table>
-
     </div>
-    <button onClick={handleExportJPG}>Descargar PDF</button>
-    </>
+    <div className='flex justify-center w-full gap-5'>
+        <button className='bg-custom-orange rounded p-3 text-white hover:cursor-pointer hover:bg-orange-700 transition-all duration-100 font-bold' onClick={handleExportJPG}>Descargar presupuesto</button>
+        <button className='btn-disabled hover:cursor-default' onClick={handleCreateWorkOrder}>Crear Orden de trabajo</button>
+    </div>
+    </div>
+    
   )
 }

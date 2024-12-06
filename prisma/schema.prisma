@@ -137,14 +137,15 @@ model Work_Orders {
 }
 
 model quotes {
-  id            String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  user_id       String?  @db.Char(36)
-  creation_date DateTime @default(now()) @db.DateTime(0)
-  total_amount  Float    @db.Float
-  slug          String   @db.VarChar(255)
-  dolar_value   Float    @db.Float
-  labor_cost    Float    @default(0) @db.Float
-  deposit       Float    @default(0) @db.Float
+  id            String       @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id       String?      @db.Char(36)
+  creation_date DateTime     @default(now()) @db.DateTime(0)
+  total_amount  Float        @db.Float
+  slug          String       @db.VarChar(255)
+  dolar_value   Float        @db.Float
+  labor_cost    Float        @default(0) @db.Float
+  deposit       Float        @default(0) @db.Float
+  state         quotes_state @default(Pendient)
 
   @@index([user_id], map: "fk_user_id")
 }
@@ -161,4 +162,10 @@ enum Users_role {
   Technician
   Client
   God
+}
+
+enum quotes_state {
+  Pendient
+  Accepted
+  Canceled
 }

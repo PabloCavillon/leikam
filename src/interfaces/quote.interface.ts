@@ -1,6 +1,8 @@
 import { Client } from "./client.interface";
 import { QuoteDetail } from "./quoteDetail.interface";
 
+export type State = 'Pendient' | 'Accepted' | 'Canceled';
+
 export interface Quote {
     id: string; 
     client?: Client; 
@@ -11,4 +13,5 @@ export interface Quote {
     laborCost:number;
     deposit:number;
     details: QuoteDetail[];
+    state: State;
 }
