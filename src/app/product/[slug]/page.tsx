@@ -1,36 +1,16 @@
-export const revalidate = 604800; // 7 días
-
 import { notFound } from "next/navigation";
-
-import { Metadata } from "next";
 import { ProductForm } from "./ui/product-form";
 import { getProductBySlug } from "@/actions";
 
 interface Props {
   params: {
-    slug: string;
-  };
+    slug: string
+  }
 }
-
-// `generateMetadata` accede a `params` de forma síncrona
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const {slug} = await params
-  const product = await getProductBySlug(slug); 
-
-  return {
-    title: product?.name ?? "Producto no encontrado",
-    description: product?.description ?? "",
-    openGraph: {
-      title: product?.name ?? "Producto no encontrado",
-      description: product?.description ?? "",
-    },
-  };
-}
-
 
 export default async function ProductPage({ params }: Props) {
-	const {slug} = await params
-  const product = await getProductBySlug(slug); 
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
