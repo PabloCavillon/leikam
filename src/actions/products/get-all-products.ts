@@ -10,9 +10,9 @@ export const getAllProducts = async () : Promise<Product[]> => {
 
         const updatedProducts = await Promise.all(
             products.map(async (product) => {
-                const attributes = await getAttributeById(product.attribute_id);
                 const { attribute_id, warranty_period, current_stock, ...rest } = product;
-        
+                const attributes = await getAttributeById(attribute_id);
+
                 return {
                     ...rest,
                     attributes,

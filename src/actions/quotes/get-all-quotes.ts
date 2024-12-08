@@ -32,6 +32,7 @@ export const gettAllQuotes = async (): Promise<Quote[]> => {
         return quotesWithDetails
 
     } catch (error) {
+        console.log(error)
         throw new Error('Hubo un problema recuperando los presupuestos')
     }
 

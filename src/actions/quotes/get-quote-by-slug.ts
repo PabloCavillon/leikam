@@ -26,6 +26,7 @@ export const getQuoteBySlug = async (slug: string) : Promise<Quote> => {
                 totalAmount: quote.total_amount,
                 dolarValue: quote.dolar_value,
                 slug,
+                state: quote.state,
                 laborCost: quote.labor_cost,
                 deposit: quote.deposit,
                 details: []
@@ -51,12 +52,14 @@ export const getQuoteBySlug = async (slug: string) : Promise<Quote> => {
             totalAmount: quote.total_amount,
             dolarValue: quote.dolar_value,
             slug,
+            state: quote.state,
             laborCost: quote.labor_cost,
             deposit: quote.deposit,
             details: quoteDetailsWithProduct
         }
 
     } catch (error) {
+        console.log(error)
         throw new Error ('No se pudo obtener el presupuesto por slug') 
     }
 }

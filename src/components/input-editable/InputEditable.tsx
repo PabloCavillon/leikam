@@ -22,7 +22,7 @@ export const InputEditable = ({value, handleChange}: Props)  => {
         setOpen(false);
     }
 
-    const handleEnter = (event:any) => {
+    const handleEnter = (event:React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter'){
             setOpen(false);
         }

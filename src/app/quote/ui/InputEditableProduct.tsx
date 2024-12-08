@@ -1,9 +1,6 @@
-import { Product } from '@/interfaces'
 import clsx from 'clsx';
 import React, { useState } from 'react'
 import { CiEdit } from 'react-icons/ci';
-import { FaRegEdit } from 'react-icons/fa';
-import { IoIosArrowDown } from 'react-icons/io';
 
 interface Props {
     id:string;
@@ -23,7 +20,7 @@ export const InputEditableProduct = ({id, value, handleChange}: Props)  => {
         setOpen(false);
     }
 
-    const handleEnter = (event:any) => {
+    const handleEnter = (event:React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter'){
             setOpen(false);
         }

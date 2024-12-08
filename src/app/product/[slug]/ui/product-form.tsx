@@ -18,11 +18,11 @@ interface Props {
 
 export const ProductForm = ({product}: Props) => {
 
-    const { handleSubmit, register, formState: {isValid}, reset } = useForm<FormInputs>({
+    const { handleSubmit, register, formState: {isValid}/*, reset*/ } = useForm<FormInputs>({
         defaultValues: {}
     })
 
-    const onSubmit = async (data:FormInputs) => {
+    const onSubmit = async (/*data:FormInputs*/) => {
 
     }
 

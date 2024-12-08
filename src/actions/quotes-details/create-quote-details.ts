@@ -33,6 +33,7 @@ export const createQuoteDetails = async (idQuote:string, quantities: {[id:string
         };
 
     } catch (error) {
+        console.log(error)
         throw new Error('Ocurrio un problema en el servidor')
     }
 

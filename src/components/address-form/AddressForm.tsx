@@ -15,11 +15,11 @@ type FormInputs = {
 }
 
 export const AddressForm = () => {
-    const {handleSubmit, register, formState: {isValid}, reset} = useForm<FormInputs>({
+    const {handleSubmit, register} = useForm<FormInputs>({
         defaultValues:{}
     })
 
-    const onSubmit = async(data:FormInputs) => {
+    const onSubmit = async(/*data:FormInputs*/) => {
 
     }
 

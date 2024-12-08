@@ -1,13 +1,9 @@
 import { getQuoteBySlug } from "@/actions";
 import { TableQuote } from "./TableQuote";
 
-interface Props {
-    params: {
-        slug: string;
-    };
-}
+type Params = Promise<{slug: string}>
 
-export default async function QuoteBySlugPage({ params }: Props) {
+export default async function QuoteBySlugPage({params} : {params: Params}) {
     const { slug } = await params; 
 
     const quote = await getQuoteBySlug(slug);

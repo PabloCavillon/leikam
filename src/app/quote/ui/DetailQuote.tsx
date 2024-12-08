@@ -7,7 +7,7 @@ import { formatNumber } from '@/util';
 import { useDolarValue } from '@/store';
 import { Product } from '@/interfaces';
 import { InputEditable } from '@/components';
-import { createQuote, createQuoteDetails, getProductById } from '@/actions';
+import { createQuote, createQuoteDetails } from '@/actions';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 

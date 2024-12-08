@@ -2,7 +2,6 @@
 
 import { Attribute } from "@/interfaces";
 import prisma from "@/lib/prisma"
-import { convertNullToUndefined } from "@/util";
 
 export const getAttributeById = async (id: string): Promise<Attribute> => {
     try {

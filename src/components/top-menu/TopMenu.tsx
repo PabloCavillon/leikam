@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { titleFont } from "@/config/fonts"
-import { IoSearchOutline } from "react-icons/io5"
 
 export const TopMenu = () => {
 

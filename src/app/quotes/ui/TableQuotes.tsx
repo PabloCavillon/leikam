@@ -19,7 +19,7 @@ const translate = {
 
 export default function TableQuotes ({quotes}: Props) {
     
-    const [quoteToEdit, setQuoteToEdit] = useState({});
+    const [, setQuoteToEdit] = useState({});
 
 
     const handleClickEdit = (quote: Quote) => {
@@ -27,9 +27,7 @@ export default function TableQuotes ({quotes}: Props) {
         redirect(`/quote`);
     }
 
-    const handleClickCreateWorkOrder = (slug: string) => {
-
-    }
+    //const handleClickCreateWorkOrder = (slug: string) => {}
     
     return(
         <div className='w-full flex justify-center p-4'>

@@ -1,9 +1,8 @@
-import { getAllTechnicians } from '@/actions';
 import { TechnicianForm } from './ui/technicianForm';
 
 export default async function NamePage () {
   
-  const technicians = await getAllTechnicians();
+  //const technicians = await getAllTechnicians();
   
   
   return (

@@ -1,5 +1,5 @@
 "use client"
-
+/*
 type FormInputs = {
     clientName: string;
     clientLastName: string;
@@ -7,7 +7,7 @@ type FormInputs = {
     idOrder: string;
     idPresupueto: string;
     
-}
+}*/
 
 export const OrdersForm = () => {
 

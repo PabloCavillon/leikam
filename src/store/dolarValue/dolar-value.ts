@@ -9,7 +9,7 @@ interface State {
 export const useDolarValue = create<State> () (
     
     persist(
-        (set, get) => ({
+        (set) => ({
             dolarValue: 0,
             
             updateDolarValue: (newValue: number) => {

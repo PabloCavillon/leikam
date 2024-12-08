@@ -2,13 +2,9 @@ import { notFound } from "next/navigation";
 import { ProductForm } from "./ui/product-form";
 import { getProductBySlug } from "@/actions";
 
-interface Props {
-  params: {
-    slug: string
-  }
-}
+type Params = Promise<{slug: string}>
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({params}: {params: Params}) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 

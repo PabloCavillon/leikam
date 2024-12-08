@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import clsx from 'clsx'
 
 import { Quote } from '@/interfaces'

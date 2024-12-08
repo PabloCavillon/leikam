@@ -11,12 +11,12 @@ interface Props {
 
 export const TableProducts =  ({ products }: Props) => {
 
-    const productList = useProductStore(state => state.productsList);
+    //const productList = useProductStore(state => state.productsList);
     const addProductToList  = useProductStore(state => state.addProductToList);
     const removeProductToList  = useProductStore(state => state.removeProductToList);
     const verifyProductInList = useProductStore(state => state.verifyProductInList);
     
-    const handlechange = async (event:any, product:Product) => {
+    const handlechange = async (event:React.ChangeEvent<HTMLInputElement>, product:Product) => {
         const {checked} = event.target;
         if (checked) {
             await addProductToList(product)

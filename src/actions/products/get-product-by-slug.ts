@@ -16,9 +16,9 @@ export const getProductBySlug = async (slug:string) : Promise<Product | null> =>
             return null;
         }   
 
-        const attributes:Attribute = await getAttributeById(product.attribute_id);
-
         const { current_stock, warranty_period, attribute_id, ...rest  } = product;
+        const attributes:Attribute = await getAttributeById(attribute_id);
+
 
         return {
             currentStock: current_stock,

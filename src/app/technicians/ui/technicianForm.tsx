@@ -12,7 +12,7 @@ type FormInputs = {
 
 export const TechnicianForm = () => {
     
-    const { handleSubmit, register, formState: { isValid }, reset } = useForm<FormInputs>({
+    const { handleSubmit, register} = useForm<FormInputs>({
         defaultValues: {}
     })
 
@@ -20,7 +20,7 @@ export const TechnicianForm = () => {
     //    required: true,
     //})
 
-    const onSubmit = async(data:FormInputs) => {
+    const onSubmit = async(/*data:FormInputs*/) => {
         
     }
 
