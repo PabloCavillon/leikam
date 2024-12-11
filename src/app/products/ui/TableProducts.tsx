@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Product } from "@/interfaces";
 import { useProductStore } from "@/store";
+import { useEffect } from "react";
 
 interface Props {
     products: Product[];
@@ -11,13 +12,14 @@ interface Props {
 
 export const TableProducts =  ({ products }: Props) => {
 
-    //const productList = useProductStore(state => state.productsList);
+    const productList = useProductStore(state => state.productsList);
     const addProductToList  = useProductStore(state => state.addProductToList);
     const removeProductToList  = useProductStore(state => state.removeProductToList);
     const verifyProductInList = useProductStore(state => state.verifyProductInList);
     
-    const handlechange = async (event:React.ChangeEvent<HTMLInputElement>, product:Product) => {
+    const handleChange = async (event:React.ChangeEvent<HTMLInputElement>, product:Product) => {
         const {checked} = event.target;
+        console.log(checked)
         if (checked) {
             await addProductToList(product)
         }
@@ -25,6 +27,10 @@ export const TableProducts =  ({ products }: Props) => {
             await removeProductToList(product)
         }
     }
+
+    useEffect(() => {
+    }, [productList])
+    
 
     return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -62,7 +68,7 @@ export const TableProducts =  ({ products }: Props) => {
                             <td className="w-4 p-4">
                                 <div className="flex items-center">
                                     <input 
-                                        onChange={(event) => handlechange(event, product)} 
+                                        onChange={(event) => handleChange(event, product)} 
                                         id="checkbox-table-search-1" 
                                         type="checkbox" 
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
@@ -100,7 +106,10 @@ export const TableProducts =  ({ products }: Props) => {
                 }
             </tbody>
         </table>
-        <Link href="/quote">Armar presupuesto</Link>
+        <div className="flex flex-col justify-center items-center w-full gap-2 p-2"> 
+            <Link href="/quote">Armar presupuesto</Link>
+            <Link href="/product/new-product">Producto nuevo</Link>
+        </div>
     </div>
 
     )

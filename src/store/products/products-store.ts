@@ -47,8 +47,10 @@ export const useProductStore = create<State> () (
 
             verifyProductInList: (product:Product) => {
                 const {productsList} = get();
-                const productFound = productsList.filter(item => item.id === product.id)[0];
-                return (!!productFound);
+                const productFound = productsList.find(item => item.id === product.id);
+                if (!productFound) 
+                    return false
+                return true
             },
         }),
         {

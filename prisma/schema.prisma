@@ -57,16 +57,16 @@ model Product_Images {
 }
 
 model Products {
-  id              String @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  name            String @unique(map: "name_UNIQUE") @db.VarChar(255)
-  slug            String @unique(map: "slug_UNIQUE") @db.VarChar(255)
-  model           String @db.VarChar(255)
-  description     String @db.Text
-  price           Float  @db.Float
+  id              String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name            String  @unique(map: "name_UNIQUE") @db.VarChar(255)
+  slug            String  @unique(map: "slug_UNIQUE") @db.VarChar(255)
+  model           String  @db.VarChar(255)
+  description     String  @db.Text
+  price           Float   @db.Float
   current_stock   Int
-  category        String @db.VarChar(255)
+  category        String? @db.VarChar(255)
   warranty_period Int?
-  attribute_id    String @db.Char(36)
+  attribute_id    String? @db.Char(36)
 
   @@index([attribute_id], map: "attribute_id")
 }

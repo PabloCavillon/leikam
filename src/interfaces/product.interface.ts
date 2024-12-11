@@ -10,6 +10,6 @@ export interface Product {
     currentStock: number;
     category?: string | null;
     warrantyPeriod?: number | null;
-    attributes: Attribute; 
+    attributes?: Attribute; 
     photosUrl?: string[] | null
   }

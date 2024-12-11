@@ -1,6 +1,6 @@
 'use server'
 import prisma from "@/lib/prisma";
-import { getProductById } from "../products/get-product-by-id";
+import { getProductById } from "../product/get-product-by-id";
 
 export const createQuoteDetails = async (idQuote:string, quantities: {[id:string]: number}) => {
     

@@ -1,10 +1,14 @@
 // attributes
 export * from './attributes/get-attributes-by-id';
 
+// product
+export * from './product/create-product';
+export * from './product/get-product-by-slug';
+export * from './product/get-product-by-id';
+export * from './product/get-product-by-model';
+
 // products
 export * from './products/get-all-products';
-export * from './products/get-product-by-id'
-export * from './products/get-product-by-slug'
 
 // quotes
 export * from './quotes/create-quote'

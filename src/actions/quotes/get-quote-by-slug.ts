@@ -2,7 +2,7 @@
 
 import { Quote } from "@/interfaces"
 import prisma from "@/lib/prisma"
-import { getProductById } from "../products/get-product-by-id"
+import { getProductById } from "../product/get-product-by-id"
 
 export const getQuoteBySlug = async (slug: string) : Promise<Quote> => {
     try {
