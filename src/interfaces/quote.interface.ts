@@ -6,11 +6,11 @@ export type State = 'Pendient' | 'Accepted' | 'Canceled';
 export interface Quote {
     id: string; 
     client?: Client; 
-    creationDate: Date;
-    totalAmount: number;
-    dolarValue: number;
+    creation_date: Date;
+    total_amount: number;
+    dolar_value: number;
     slug: string;
-    laborCost:number;
+    labor_cost:number;
     deposit:number;
     details: QuoteDetail[];
     state: State;

@@ -5,11 +5,11 @@ export interface Technician {
     id: string; 
     address: Address; 
     user?: User; 
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     phone?: string;
     email?: string;
     skills?: string;
     dni: string;
-    criminalRecords: boolean;
+    criminal_records: boolean;
   }

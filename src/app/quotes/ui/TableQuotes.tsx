@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { formatNumber, formatDate } from '@/util'
 import { redirect } from 'next/navigation'
 import { Quote } from '@/interfaces'
 import Link from 'next/link'
+import { cancelQuote } from '@/actions'
 
 interface Props {
     quotes: Quote[]
@@ -19,6 +20,8 @@ const translate = {
 
 export default function TableQuotes ({quotes}: Props) {
     
+    const [quotesState, setQuoteState] = useState(quotes);
+
     const [, setQuoteToEdit] = useState({});
 
 
@@ -27,7 +30,21 @@ export default function TableQuotes ({quotes}: Props) {
         redirect(`/quote`);
     }
 
-    //const handleClickCreateWorkOrder = (slug: string) => {}
+
+    const handleClickCreateWorkOrder = (slug: string) => {
+        redirect(`/workOrder/${slug}`)
+    }
+
+    const handleClickCancel = async (id: string) => {
+        const quoteCanceled = await cancelQuote(id);
+        setQuoteState(await Promise.all(quotesState.map(q => {
+            if (q.id === id) return quoteCanceled
+            return q;
+        })))
+    }
+
+    useEffect(() => {
+    }, [quotesState])
     
     return(
         <div className='w-full flex justify-center p-4'>
@@ -43,7 +60,7 @@ export default function TableQuotes ({quotes}: Props) {
                 </thead>
                 <tbody>
                     {
-                        quotes.map(item => (
+                        quotesState.map(item => (
                             <tr 
                                 key={item.slug} 
                                 className='bg-custom-dark-gray text-gray-400 hover:bg-gray-400 hover:text-custom-dark-gray'
@@ -67,13 +84,13 @@ export default function TableQuotes ({quotes}: Props) {
                                     ></span>
                                      {translate[item.state]}
                                 </td>
-                                <td className='text-center'>{formatDate(item.creationDate.toString())}</td>
-                                <td className='text-center'>$ {formatNumber(item.totalAmount, 2)}</td>
+                                <td className='text-center'>{formatDate(item.creation_date.toString())}</td>
+                                <td className='text-center'>$ {formatNumber(item.total_amount, 2)}</td>
                                 <td className='text-center w-4/12'>
                                     <div className='flex flex-row justify-around gap-1 p-2'>
                                         <button onClick={() => handleClickEdit(item)} className='hover:text-blue-500 hover:underline'>Editar</button>
-                                        <button onClick={() => handleClickEdit(item)} className='hover:text-blue-500 hover:underline' type="button">Crear Orden</button>
-                                        <button onClick={() => handleClickEdit(item)} className='hover:text-blue-500 hover:underline' type="button">Cancelar</button>
+                                        <button onClick={() => handleClickCreateWorkOrder(item.slug)} className='hover:text-blue-500 hover:underline' type="button">Crear Orden</button>
+                                        <button onClick={() => handleClickCancel(item.id)} className='hover:text-blue-500 hover:underline' type="button">Cancelar</button>
                                     </div>
                                 </td>
                             </tr>

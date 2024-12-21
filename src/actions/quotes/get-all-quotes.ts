@@ -12,16 +12,12 @@ export const gettAllQuotes = async (): Promise<Quote[]> => {
         })
 
         const quotesWithDetails = await Promise.all(
-            quotes.map(async ({id, creation_date, total_amount, labor_cost, dolar_value, ...rest}) => {
+            quotes.map(async ({id, ...rest}) => {
 
                 const details = await getAllDetailsByQuoteId(id)
 
                 return {
                     id,
-                    creationDate: creation_date,
-                    totalAmount: total_amount,
-                    laborCost: labor_cost,
-                    dolarValue: dolar_value,
                     details, 
                     ...rest
                 }

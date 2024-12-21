@@ -7,9 +7,10 @@ export interface Product {
     model: string;
     description?: string;
     price: number;
-    currentStock: number;
+    current_stock: number;
+    active: boolean;
     category?: string | null;
-    warrantyPeriod?: number | null;
+    warranty_period?: number | null;
     attributes?: Attribute; 
-    photosUrl?: string[] | null
+    photos_url?: string[] | null
   }

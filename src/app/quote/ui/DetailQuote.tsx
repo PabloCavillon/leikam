@@ -84,7 +84,7 @@ export const DetailQuote = ({ productDetails, reset }: Props) => {
 
     const handleButtonClick = async () => {
         const totalAmount = calculateTotal();
-        const { id, slug } = await createQuote({ deposit, dolarValue, totalAmount, laborCost });
+        const { id, slug } = await createQuote({ deposit, dolar_value:dolarValue, total_amount:totalAmount, labor_cost:laborCost });
 
         if (!id) {
             alert("Hubo un problema al momento de crear el presupuesto");
@@ -141,7 +141,7 @@ export const DetailQuote = ({ productDetails, reset }: Props) => {
                                         value={quantities[p.id] ?? 0} 
                                         handleChange={handleChangeQuantity}
                                     />
-                                    <span className='text-gray-400 '>en stock: {p.currentStock}</span>
+                                    <span className='text-gray-400 '>en stock: {p.current_stock}</span>
                                 </div>
                             </td>
                             <td className="text-center p-5 ">

@@ -81,7 +81,7 @@ export const TableQuote = ({quote}: Props) => {
                     </td>
                     <td className="flex flex-col text-center">
                         <span className="text-gray-400 text-xs">dd/mm/aaaa</span>
-                        <span className="font-bold">{formatDate(quote.creationDate.toString())}</span>
+                        <span className="font-bold">{formatDate(quote.creation_date.toString())}</span>
                     </td>
                 </tr>
                 <tr className="bg-custom-orange border-2 text-center font-bold text-white">
@@ -102,8 +102,8 @@ export const TableQuote = ({quote}: Props) => {
                             >
                                 <td className="border-l-2 border-custom-orange pl-3">{product.name}</td>
                                 <td className="text-center">{detail.quantity}</td>
-                                <td className="text-center">$ {formatNumber(detail.unitPrice * quote.dolarValue, 2)}</td>
-                                <td className="border-r-2 border-custom-orange text-center">$ {formatNumber(detail.quantity * detail.unitPrice * quote.dolarValue, 2)}</td>
+                                <td className="text-center">$ {formatNumber(detail.unit_price * quote.dolar_value, 2)}</td>
+                                <td className="border-r-2 border-custom-orange text-center">$ {formatNumber(detail.quantity * detail.unit_price * quote.dolar_value, 2)}</td>
                             </tr>
                         )   
                     })
@@ -111,7 +111,7 @@ export const TableQuote = ({quote}: Props) => {
                 { 
                     <tr className="bg-gray-300">
                         <td colSpan={3} className="text-left pl-3 border-l-2 border-custom-orange font-bold">Mano de Obra</td>
-                        <td className="text-center border-r-2 border-custom-orange"><span>{formatNumber(quote.laborCost, 2)}</span></td>
+                        <td className="text-center border-r-2 border-custom-orange"><span>{formatNumber(quote.labor_cost, 2)}</span></td>
                     </tr>
                 }                
                 {filasAdicionales}    
@@ -128,7 +128,7 @@ export const TableQuote = ({quote}: Props) => {
                         <span>TOTAL:</span>
                     </td>
                     <td className="text-center font-extrabold text-3xl border-r-2 border-b-2 border-t-2 border-custom-orange">
-                        <span>$ {formatNumber(quote.totalAmount, 2)}</span>
+                        <span>$ {formatNumber(quote.total_amount, 2)}</span>
                     </td>
                 </tr>
             </tfoot>

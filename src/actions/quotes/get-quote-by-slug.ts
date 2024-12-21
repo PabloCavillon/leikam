@@ -2,7 +2,7 @@
 
 import { Quote } from "@/interfaces"
 import prisma from "@/lib/prisma"
-import { getProductById } from "../product/get-product-by-id"
+import { getProductById } from "../products/get-product-by-id"
 
 export const getQuoteBySlug = async (slug: string) : Promise<Quote> => {
     try {
@@ -21,14 +21,7 @@ export const getQuoteBySlug = async (slug: string) : Promise<Quote> => {
 
         if (!quoteDetails) {
             return {
-                id: quote.id,
-                creationDate: quote.creation_date,
-                totalAmount: quote.total_amount,
-                dolarValue: quote.dolar_value,
-                slug,
-                state: quote.state,
-                laborCost: quote.labor_cost,
-                deposit: quote.deposit,
+                ...quote,
                 details: []
             }
         }
@@ -37,24 +30,14 @@ export const getQuoteBySlug = async (slug: string) : Promise<Quote> => {
             quoteDetails.map(async item => {
                 const product = await getProductById(item.product_id);
                 return {
-                    id: item.id,
-                    quoteId: item.quote_id,
-                    product,
-                    quantity: item.quantity,
-                    unitPrice: item.unit_price
+                    ...item,
+                    product
                 };
             })
         );
 
         return {
-            id: quote.id,
-            creationDate: quote.creation_date,
-            totalAmount: quote.total_amount,
-            dolarValue: quote.dolar_value,
-            slug,
-            state: quote.state,
-            laborCost: quote.labor_cost,
-            deposit: quote.deposit,
+            ...quote,
             details: quoteDetailsWithProduct
         }
 

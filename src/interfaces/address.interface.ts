@@ -6,5 +6,5 @@ export interface Address {
   apartment?: string;
   city: string;
   state: string;
-  postalCode: string;
+  postal_code: string;
 }

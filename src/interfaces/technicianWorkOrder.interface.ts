@@ -2,7 +2,7 @@ import { Technician } from "./technician.interface";
 
 export interface TechnicianWorkOrder {
     id: string; // UUID
-    workOrderId: string; // UUID
+    work_order_id: string; // UUID
     technician: Technician; // UUID
-    clientNote: number; // 1 to 5
+    client_note: number; // 1 to 5
 }

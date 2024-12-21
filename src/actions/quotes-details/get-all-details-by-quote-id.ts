@@ -14,14 +14,12 @@ export const getAllDetailsByQuoteId = async (quoteId: string): Promise<QuoteDeta
         })
 
         const detailsWithProduct = await Promise.all(
-            details.map(async ({product_id, unit_price, quote_id, ...rest}) => {
+            details.map(async ({product_id, ...rest}) => {
 
                 const product = await getProductById(product_id);
 
                 return {
                     product,
-                    unitPrice: unit_price,
-                    quoteId: quote_id,
                     ...rest
                 }
             })

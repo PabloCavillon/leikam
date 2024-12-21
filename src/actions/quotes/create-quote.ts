@@ -4,12 +4,12 @@ import prisma from "@/lib/prisma";
 
 interface Props {
     deposit: number, 
-    dolarValue: number, 
-    totalAmount: number,
-    laborCost: number,
+    dolar_value: number, 
+    total_amount: number,
+    labor_cost: number,
 }
 
-export const createQuote = async ({ deposit, dolarValue, totalAmount, laborCost }:Props ) => {
+export const createQuote = async ({ deposit, dolar_value, total_amount, labor_cost }:Props ) => {
     const slug = await generateNextSlug();
     
     try {
@@ -17,9 +17,9 @@ export const createQuote = async ({ deposit, dolarValue, totalAmount, laborCost 
           data: {
             deposit,
             creation_date: new Date(),
-            total_amount: totalAmount,
-            dolar_value: dolarValue,
-            labor_cost: laborCost,
+            total_amount,
+            dolar_value,
+            labor_cost,
             slug
         },
           select: {

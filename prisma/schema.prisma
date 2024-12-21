@@ -67,6 +67,7 @@ model Products {
   category        String? @db.VarChar(255)
   warranty_period Int?
   attribute_id    String? @db.Char(36)
+  active          Boolean @default(true)
 
   @@index([attribute_id], map: "attribute_id")
 }
@@ -108,10 +109,10 @@ model Technicians {
 }
 
 model Technicians_Work_Orders {
-  id            String @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  work_order_id String @db.Char(36)
-  technician_id String @db.Char(36)
-  client_note   Int?   @db.TinyInt
+  id              String @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  work_order_id   String @db.Char(36)
+  technician_id   String @db.Char(36)
+  technician_note Int?   @db.TinyInt
 
   @@index([technician_id], map: "technician_id")
   @@index([work_order_id], map: "work_order_id")
