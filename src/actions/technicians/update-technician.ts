@@ -1,32 +1,39 @@
 'use server'
 
-import { Technician } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
-export const updateTechnician = async (technician: Technician) => {
+interface TechnicianUpdated {
+    id: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    dni: string;
+    criminal_records: boolean;
+    birthday: Date;
+}
+
+export const updateTechnician = async (technician: TechnicianUpdated) => {
 
     try {
-
         const technicianBD = await prisma.technicians.findFirst({where:{id:technician.id}})
-
         if (!technicianBD) {
             console.log("No existe el técnico para modificarlo")
             return;
         }
-
-        const technicianUpdated = await prisma.technicians.update({
+        const {id: technicianUpdatedId} = await prisma.technicians.update({
             where:{id: technician.id},
             data:{
-                address_id: technician.address.id,
                 ...technician
+            },
+            select:{
+                id:true
             }
         })
-
-        return technicianUpdated;
-
+        return technicianUpdatedId;
     } catch (error) {
         console.log(error);
-        throw new Error ("Ocurrió un problema la actualizar al técnico");
+        throw new Error ("Ocurrió un problema la actualizar al técnico" + error);
     }
 
 }

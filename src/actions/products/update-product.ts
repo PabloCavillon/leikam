@@ -3,19 +3,32 @@
 import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
-export const updateProduct = async(product: Product) => {
+interface ProductUpdated {
+    id: string;
+    current_stock: number;
+    name: string;
+    model: string;
+    description: string;
+    price: number;
+    category: string;
+}
+
+export const updateProduct = async(data: ProductUpdated) => {
 
     try {
 
-        const productUpdated = await prisma.products.update({
-            where: {id: product.id},
-            data: product
+        const {id: productUpdatedId} = await prisma.products.update({
+            where: {id: data.id},
+            data,
+            select:{
+                id:true,
+            }
         })
 
-        if (!productUpdated)
+        if (!productUpdatedId)
             throw new Error("Ocurrio un problema al actualizar el producto")
 
-        return productUpdated;
+        return productUpdatedId;
 
     } catch (error) {
         console.log(error);

@@ -1,6 +1,5 @@
 'use server'
 
-import { Attribute } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 interface Props {
@@ -9,45 +8,24 @@ interface Props {
     model: string, 
     description: string, 
     price: number, 
-    currentStock: number,
-    category?: string,
-    warrantyPeriod?: number
-    attributes?: Attribute[] 
+    current_stock: number,
+    category: string,
 }
 
-export const createProduct = async (params: Props) => {
-
-    const { name, model, description, price, slug, currentStock: current_stock } = params;
-
+export const createProduct = async (data: Props) => {
     try {
-
-        const {id, slug:slugDB} = await prisma.products.create({
-            data:{
-                name,
-                model,
-                slug,
-                description,
-                price,
-                current_stock,
-            },
+        const {id: productCreatedId} = await prisma.products.create({
+            data,
             select: {
-                id: true,
-                slug:true
+                id: true
             }
         })
 
-        return {
-            ok: true,
-            id,
-            slug:slugDB
-        }
-
+        return productCreatedId;
 
     } catch (error) {
         console.log(error)
         throw new Error ("Ocurrió un problema al crear el producto");
     }
-
-
 }
 

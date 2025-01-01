@@ -3,14 +3,14 @@
 import clsx from 'clsx';
 import React, { useState } from 'react'
 import { CiEdit } from 'react-icons/ci';
-import { formatNumber } from '@/util';
 
 interface Props {
+    id:string;
     value: number;
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>, id:string) => void;
 }
 
-export const InputEditable = ({value, handleChange}: Props)  => {
+export const InputEditableProduct = ({id, value, handleChange}: Props)  => {
     
     const [open, setOpen] = useState(false);
 
@@ -37,14 +37,12 @@ export const InputEditable = ({value, handleChange}: Props)  => {
                     className='bg-transparent border-b-2 text-center w-full'
                     type="number"
                     value={value} 
-                    onChange={(event) =>
-                        handleChange(event)
-                    }
+                    onChange={ (event) => handleChange(event, id) }
                     min={0} 
                 />
             </div>
             <div className={clsx('flex flex-row items-center justify-center gap-1',{'hidden': open}, {'block': !open})}>
-                <span>{formatNumber(value, 2)}</span>
+                <span>{value}</span>
                 <span className='hover:cursor-pointer hover:text-blue-500' onClick={handleClick}><CiEdit /></span>
             </div>
         </>

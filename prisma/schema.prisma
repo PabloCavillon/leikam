@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Addresses {
-  id          String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  street      String  @db.VarChar(255)
-  number      String  @db.VarChar(10)
-  floor       String? @db.VarChar(10)
-  apartment   String? @db.VarChar(10)
-  city        String  @db.VarChar(255)
-  state       String  @db.VarChar(255)
-  postal_code String  @db.VarChar(20)
+  id                 String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  street             String  @db.VarChar(255)
+  number             String  @db.VarChar(10)
+  floor              String? @db.VarChar(10)
+  apartment          String? @db.VarChar(10)
+  city               String  @db.VarChar(255)
+  state              String  @db.VarChar(255)
+  postal_code        String  @db.VarChar(20)
+  additional_comment String? @db.Text
 }
 
 model Attributes {
@@ -94,16 +95,18 @@ model Quote_Details {
 }
 
 model Technicians {
-  id               String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  address_id       String   @db.Char(36)
-  user_id          String?  @unique(map: "user_id") @db.Char(36)
-  first_name       String   @db.VarChar(255)
-  last_name        String   @db.VarChar(255)
-  phone            String?  @db.VarChar(20)
-  email            String?  @db.VarChar(255)
-  skills           String?  @db.Text
-  dni              String   @db.VarChar(20)
-  criminal_records Boolean? @default(false)
+  id               String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  address_id       String    @db.Char(36)
+  user_id          String?   @unique(map: "user_id") @db.Char(36)
+  first_name       String    @db.VarChar(255)
+  last_name        String    @db.VarChar(255)
+  phone            String?   @db.VarChar(20)
+  email            String?   @db.VarChar(255)
+  skills           String?   @db.Text
+  dni              String    @db.VarChar(20)
+  criminal_records Boolean   @default(false)
+  active           Boolean   @default(true)
+  birthday         DateTime? @db.DateTime(0)
 
   @@index([address_id], map: "address_id")
 }
@@ -138,15 +141,15 @@ model Work_Orders {
 }
 
 model quotes {
-  id            String       @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  user_id       String?      @db.Char(36)
-  creation_date DateTime     @default(now()) @db.DateTime(0)
-  total_amount  Float        @db.Float
-  slug          String       @db.VarChar(255)
-  dolar_value   Float        @db.Float
-  labor_cost    Float        @default(0) @db.Float
-  deposit       Float        @default(0) @db.Float
-  state         quotes_state @default(Pendient)
+  id              String       @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id         String?      @db.Char(36)
+  creation_date   DateTime     @default(now()) @db.DateTime(0)
+  total_amount    Float        @db.Float
+  slug            String       @db.VarChar(255)
+  dolar_value     Float        @db.Float
+  labor_cost      Float        @default(0) @db.Float
+  advance_payment Float        @default(0) @db.Float
+  state           quotes_state @default(Pendient)
 
   @@index([user_id], map: "fk_user_id")
 }

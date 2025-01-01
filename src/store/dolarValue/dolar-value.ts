@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 interface State {
     dolarValue: number;
-    updateDolarValue: (newValue: number) => void;
+    setDolarValue: (newValue: number) => void;
 }
 
 export const useDolarValue = create<State> () (
@@ -12,7 +12,7 @@ export const useDolarValue = create<State> () (
         (set) => ({
             dolarValue: 0,
             
-            updateDolarValue: (newValue: number) => {
+            setDolarValue: (newValue: number) => {
                 set({dolarValue: newValue})
             }
         }),

@@ -11,7 +11,7 @@ export interface Quote {
     dolar_value: number;
     slug: string;
     labor_cost:number;
-    deposit:number;
+    advance_payment: number;
     details: QuoteDetail[];
     state: State;
 }

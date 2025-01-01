@@ -1,40 +1,34 @@
 'use server'
+
 import prisma from "@/lib/prisma";
-import { getProductById } from "../products/get-product-by-id";
+import { Product } from "@/interfaces";
 
-export const createQuoteDetails = async (idQuote:string, quantities: {[id:string]: number}) => {
-    
+interface ProductWithQuantity extends Product{
+    quantity: number;
+}
+
+export const createQuoteDetails = async (products: ProductWithQuantity[], quote_id: string) => {
     try {
-        for (const id in quantities) {
-
-            const quantity = quantities[id];
-
-            const product = await getProductById(id);
-
-            await prisma.quote_Details.create({
-                data:{
-                    quote_id: idQuote,
-                    product_id: id,
-                    quantity,
+        // Crear las promesas para cada producto
+        const quoteDetailsPromises = products.map((product) =>
+            prisma.quote_Details.create({
+                data: {
+                    quote_id,
+                    product_id: product.id,
+                    quantity: product.quantity,
                     unit_price: product.price,
                 },
-                select: {
-                    id:true,
-                    quote_id: true,
-                    product_id: true,
-                    quantity: true,
-                    unit_price: true,
-                }
-            });
-        }
+            })
+        );
+
+        // Ejecutar todas las operaciones en paralelo
+        await Promise.all(quoteDetailsPromises);
 
         return {
-            ok:true
+            ok: true,
         };
-
     } catch (error) {
-        console.log(error)
-        throw new Error('Ocurrio un problema en el servidor')
+        console.error("Error en el servidor:", error);
+        throw new Error("Ocurrió un problema en el servidor");
     }
-
-}
+};

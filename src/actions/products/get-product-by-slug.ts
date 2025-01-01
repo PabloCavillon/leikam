@@ -11,10 +11,8 @@ export const getProductBySlug = async (slug:string) : Promise<Product | null> =>
             where: {slug}
         }) 
 
-        if (!product){
-            console.log("No se encuentra el producto con el slug: " + slug);
+        if (!product)        
             return null;
-        }   
 
         const { current_stock, warranty_period, attribute_id, ...rest  } = product;
         //const attributes:Attribute = await getAttributeById(attribute_id);

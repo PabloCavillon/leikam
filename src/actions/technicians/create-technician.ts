@@ -1,17 +1,22 @@
 'use server'
 
-import { Technician } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
-export const createTechnician = async (technician: Technician) => {
+interface TechnicianCreated {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    dni: string;
+    criminal_records: boolean;
+    birthday: Date;
+    address_id: string;
+}
+export const createTechnician = async (data:TechnicianCreated) => {
 
     try {
-
-        const technicianCreatedId = await prisma.technicians.create({
-            data: {
-                address_id: technician.address.id,
-                ...technician
-            },
+        const {id: technicianCreatedId} = await prisma.technicians.create({
+            data,
             select: {
                 id:true
             }

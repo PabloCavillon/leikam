@@ -1,3 +1,8 @@
+// addresses
+export * from './address/get-address-by-id'
+export * from './address/update-address'
+export * from './address/create-address'
+
 // attributes
 export * from './attributes/get-attributes-by-id';
 
@@ -11,17 +16,22 @@ export * from './products/get-all-products';
 
 // quotes
 export * from './quotes/create-quote'
-export * from './quotes/get-quote-by-slug'
+export * from './quotes/get-quote-by-id'
 export * from './quotes/get-all-quotes'
 export * from './quotes/cancel-quote'
+export * from './quotes/edit-quote'
 
 // quote details
 export * from './quotes-details/create-quote-details';
 export * from './quotes-details/get-all-details-by-quote-id'
+export * from './quotes-details/edit-quote-details'
 
 // technicians
 export * from './technicians/create-technician';
 export * from './technicians/get-all-technicians';
 export * from './technicians/get-technician-by-id';
-export * from './work-orders/get-technicians-stats';
+export * from './technicians/get-technicians-stats';
+export * from './technicians/get-technician-stats-by-id';
 export * from './technicians/update-technician';
+export * from './technicians/desactivate-technician';
+export * from './technicians/activate-technician';

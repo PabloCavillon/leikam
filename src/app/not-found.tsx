@@ -1,8 +1,8 @@
-import { PageNotFound } from '@/components';
+import { NotFound } from '@/components';
 
 export default function NotFoundPage() {
 
   return (
-    <PageNotFound />
+    <NotFound />
   );
 }

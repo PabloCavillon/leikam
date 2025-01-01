@@ -1,16 +1,7 @@
-import { Technician } from "@/interfaces";
-import { TechnicianForm } from "../ui/form-technicians";
+"use client";
 
-export default function NamePage() {
+import { TechnicianForm } from "@/components/technician-form/TechnicianForm";
 
-    const handleSubmit = (tehcnician: Technician) => {
-
-    }
-
-    return (
-        <div>
-            <h1>Cargar nuevo técnico</h1>
-            <TechnicianForm onSubmit={handleSubmit}/>
-        </div>
-    );
+export default function TechniciansPage() {
+    return <TechnicianForm />;
 }
