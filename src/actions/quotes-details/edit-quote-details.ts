@@ -8,6 +8,14 @@ interface ProductWithQuantity extends Product{
     quantity: number;
 }
 
+interface QuoteDetailWithId {
+    id: string;
+    quote_id: string;
+    product_id: string;
+    quantity: number;
+    unit_price: number;
+}
+
 export const editQuoteDetails = async (products: ProductWithQuantity[], quote_id: string) => {
     
     try {
@@ -37,7 +45,7 @@ export const editQuoteDetails = async (products: ProductWithQuantity[], quote_id
                         unit_price: product.price
                     }
                 })
-                quote_details = quote_details.filter(qd => qd.id !== quote_detail.id)
+                quote_details = quote_details.filter((qd:QuoteDetailWithId) => qd.id !== quote_detail.id)
             } else {
                 await prisma.quote_Details.create({
                     data: {

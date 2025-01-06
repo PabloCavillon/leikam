@@ -5,7 +5,6 @@ export interface Kit {
     name: string;
     slug: string;
     price: number;
-    description?: string;
     products: ProductKit[];
     expiration_date?: Date | null;
 }

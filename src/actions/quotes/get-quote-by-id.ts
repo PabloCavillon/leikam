@@ -4,6 +4,14 @@ import { Quote } from "@/interfaces"
 import prisma from "@/lib/prisma"
 import { getProductById } from "../products/get-product-by-id"
 
+export interface QuoteDetail {
+    id: string;
+    quote_id: string; 
+    product_id: string;  
+    quantity: number;
+    unit_price: number;
+}
+
 export const getQuoteById = async (id: string) : Promise<Quote> => {
     try {
 
@@ -27,10 +35,10 @@ export const getQuoteById = async (id: string) : Promise<Quote> => {
         }
 
         const quoteDetailsWithProduct = await Promise.all(
-            quoteDetails.map(async item => {
-                const product = await getProductById(item.product_id);
+            quoteDetails.map(async (qd: QuoteDetail) => {
+                const product = await getProductById(qd.product_id);
                 return {
-                    ...item,
+                    ...qd,
                     product
                 };
             })
