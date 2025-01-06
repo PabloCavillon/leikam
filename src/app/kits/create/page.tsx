@@ -1,15 +1,16 @@
 'use client'
 
-import { createKit } from "@/actions";
-import { ProductsModal } from "@/components";
-import { useProductStore } from "@/store";
-import { formatNumber } from "@/util";
-import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import { TiDeleteOutline } from "react-icons/ti";
+import clsx from "clsx";
+
+import { formatNumber } from "@/util";
+import { useProductStore } from "@/store";
+import { createKit } from "@/actions";
+import { ProductsModal } from "@/components";
 
 interface kit {
     name: string;
@@ -21,7 +22,7 @@ export default function CreateKitPage() {
  
     const router = useRouter();
 
-    const {register, reset, handleSubmit, formState:{isValid} } = useForm<kit>();
+    const {register, handleSubmit, formState:{isValid} } = useForm<kit>();
     const [editQuantityProductOpen, setEditQuantityProductOpen] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     

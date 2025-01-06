@@ -1,7 +1,7 @@
 'use client'
 
 import { useForm } from "react-hook-form";
-
+/*
 interface ClientWithAddress {
     first_name: string;
     last_name: string;
@@ -16,19 +16,19 @@ interface ClientWithAddress {
     state: string;
     postal_code: string;
     additional_comment: string;
-}
+}*/
 
 
 export const ClientForm = () => {
 
-    const {register, handleSubmit, reset, formState: {isValid}} = useForm();
+    const {register, handleSubmit, formState: {isValid}} = useForm();
 
-    const onSubmit = (data: any) => {
-
+/*    const onSubmit = (data: any) => {
+        console.log(data)
     }
-
+*/
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(console.log)}>
             <div>
                 <label>Nombre:</label>
                 <input type="text" {...register("first_name", {required: true})} />

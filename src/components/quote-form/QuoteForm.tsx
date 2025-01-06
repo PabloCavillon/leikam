@@ -47,7 +47,7 @@ export const QuoteForm = ({quote}: Props) => {
         setDolarValue(quote.dolar_value);
         setLaborCost(quote.labor_cost);
         setAdvancePayment(quote.advance_payment);
-    }, [quote]);   
+    }, [quote, setDolarValue, setLaborCost, setAdvancePayment]);   
 
     useEffect(() => {}, [productsSelected])
 

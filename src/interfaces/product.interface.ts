@@ -1,4 +1,3 @@
-import { Attribute } from './attribute.interface';
 
 export interface Product {
     id: string; 
@@ -11,6 +10,5 @@ export interface Product {
     active: boolean;
     category?: string | null;
     warranty_period?: number | null;
-    attributes?: Attribute; 
     photos_url?: string[] | null
   }

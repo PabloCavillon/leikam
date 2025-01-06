@@ -32,7 +32,7 @@ export default function ViewQuotePage({params} : {params: Params}) {
             setIsLoading(true);
         }
         fetchQuote();
-    }, [params])
+    }, [params, router])
   
     if (!isloading) {
         return (

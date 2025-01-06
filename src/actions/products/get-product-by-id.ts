@@ -1,6 +1,6 @@
 'use server'
 
-import { Attribute, Product } from "@/interfaces"
+import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma"
 
 export const getProductById = async (id:string) : Promise<Product> => {

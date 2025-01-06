@@ -85,13 +85,12 @@ model Technicians {
   address_id       String
   first_name       String
   last_name        String
-  phone            String?
+  phone            String
   email            String?
-  skills           String?
   dni              String
   criminal_records Boolean   @default(false)
   active           Boolean   @default(true)
-  birthday         DateTime?
+  birthday         DateTime
 
   @@index([address_id], map: "technicians_address_id_idx")
 }

@@ -1,4 +1,4 @@
-import { Kit, Product } from "@/interfaces";
+import { Kit } from "@/interfaces";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

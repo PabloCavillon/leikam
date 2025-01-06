@@ -3,9 +3,6 @@ export * from './address/get-address-by-id'
 export * from './address/update-address'
 export * from './address/create-address'
 
-// attributes
-export * from './attributes/get-attributes-by-id';
-
 // clients
 export * from './clients/create-client';
 

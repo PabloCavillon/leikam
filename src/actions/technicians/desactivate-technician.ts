@@ -17,7 +17,7 @@ export const desactivateTechnician = async (id: string) => {
             }
         })
         const {address_id, ...rest} = technicianUpdated;
-        const address = await getAddressById(technicianBD.address_id);
+        const address = await getAddressById(address_id);
         return {...rest, address};
     } catch (error) {
         console.log(error);

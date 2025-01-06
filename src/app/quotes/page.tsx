@@ -23,7 +23,7 @@ export default function PresupuestoPage() {
 
         resolveData();
 
-    },[router])
+    },[router, loadQuotesList])
 
     const handleClickCancel = async (id: string) => {
         const resp = await cancelQuote(id);

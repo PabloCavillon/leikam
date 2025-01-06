@@ -1,7 +1,6 @@
 "use client";
 
 import { getTechnicianById } from "@/actions";
-import { ProductForm } from "@/components/product-form/ProductForm";
 import { TechnicianForm } from "@/components/technician-form/TechnicianForm";
 import { Technician } from "@/interfaces";
 import { notFound } from "next/navigation";

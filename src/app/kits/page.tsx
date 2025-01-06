@@ -21,7 +21,7 @@ export default function PromocionalKitsPage() {
 			setIsLoading(true);
 		}
 		fetchKits();
-	}, []);
+	}, [loadKitsList]);
 
   
 	if (!isLoading) 
@@ -30,7 +30,7 @@ export default function PromocionalKitsPage() {
 	return (
 		<div className="space-y-6">
 		{
-			kitsList.map((kit) => (<></>))
+			kitsList.map((kit) => (<div key={kit.id}></div>))
 		}
 		</div>
 	);

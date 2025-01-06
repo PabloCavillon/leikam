@@ -1,8 +1,7 @@
 'use server'
 
-import { Attribute, Product } from "@/interfaces"
+import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma"
-import { getAttributeById } from "../attributes/get-attributes-by-id"
 
 export const getProductBySlug = async (slug:string) : Promise<Product | null> => {
 
@@ -14,14 +13,11 @@ export const getProductBySlug = async (slug:string) : Promise<Product | null> =>
         if (!product)        
             return null;
 
-        const { current_stock, warranty_period, attribute_id, ...rest  } = product;
-        //const attributes:Attribute = await getAttributeById(attribute_id);
-
+        const { current_stock, warranty_period, ...rest  } = product;
 
         return {
             current_stock: current_stock,
             warranty_period: warranty_period,
-            //attributes,
             ...rest
         };
 

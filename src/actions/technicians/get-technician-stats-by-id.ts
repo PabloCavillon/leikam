@@ -2,11 +2,6 @@
 
 import prisma from "@/lib/prisma";
 
-interface TechnicianStats {
-  average: number;
-  quantity: number;
-}
-
 export const getTechniciansStatsById = async (id: string): Promise<{quantity:number, average:number}> => {
 
     try {

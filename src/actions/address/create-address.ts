@@ -1,6 +1,5 @@
 'use server'
 
-import { Technician } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
 interface AddressCreated {

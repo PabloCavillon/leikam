@@ -1,6 +1,6 @@
 'use server'
 
-import { Attribute, Product } from "@/interfaces"
+import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma"
 
 export const getProductByModel = async (model:string) : Promise<Product | null> => {
@@ -13,7 +13,7 @@ export const getProductByModel = async (model:string) : Promise<Product | null> 
         if (!product)
             return null;
 
-        const { current_stock, warranty_period, attribute_id, ...rest  } = product;
+        const { current_stock, warranty_period, ...rest  } = product;
 
 
         return {

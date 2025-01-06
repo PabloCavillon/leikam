@@ -25,8 +25,7 @@ export const ProductForm = ({product}: Props) => {
     const { 
         handleSubmit, 
         register, 
-        reset, 
-        formState:{isValid} 
+        reset
     } = useForm<FormInputs>();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +49,7 @@ export const ProductForm = ({product}: Props) => {
             setIsLoading(true);
         }
         resolveParams();
-    }, [product]);
+    }, [product, reset]);
 
     const onSubmit = async (data: FormInputs) => {
         try {
@@ -59,7 +58,7 @@ export const ProductForm = ({product}: Props) => {
                 
                 const slug = data.name.replace(/ /g, "-");
                 
-                let product = await getProductBySlug(slug);
+                const product = await getProductBySlug(slug);
                 
                 if (product) return alert("Ya existe un producto con ese nombre");
                 

@@ -13,7 +13,7 @@ export const getActiveTechnicians = async (): Promise<Technician[]|[]> => {
         })
 
         const techniciansWithAddressAndStats = await Promise.all(technicians.map(async tech => {
-            const {address_id, user_id, ...rest} = tech;
+            const {address_id, ...rest} = tech;
             const technicianAddress = await getAddressById(address_id)
             const stats = await getTechniciansStatsById(tech.id)
 

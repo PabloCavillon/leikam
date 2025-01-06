@@ -1,6 +1,5 @@
 'use server'
 
-import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
 interface ProductUpdated {

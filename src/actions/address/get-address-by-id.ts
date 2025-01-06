@@ -1,5 +1,7 @@
-import { Address } from "@/interfaces";
+'use server'
+
 import prisma from "@/lib/prisma";
+import { Address } from "@/interfaces";
 
 
 export const getAddressById = async (id:string): Promise<Address> => {
@@ -15,6 +17,7 @@ export const getAddressById = async (id:string): Promise<Address> => {
         return address
 
     }  catch (err) {
+        console.log(err)
         throw new Error(`Ocurrió un error al obtener la dirección con id: ${id}`)
     }
 

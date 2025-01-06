@@ -1,5 +1,4 @@
 export * from "./address.interface";
-export * from "./attribute.interface"
 export * from "./client.interface";
 export * from "./kit.interface";
 export * from "./product.interface";

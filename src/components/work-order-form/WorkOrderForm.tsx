@@ -24,18 +24,21 @@ export const WorkOrderForm = ({quote}: Props) => {
 
     useEffect(() => {
         const resolveTechnicians = async () => {
-
             const activeTechnicians = await getActiveTechnicians();
             setTechnicians(activeTechnicians);
+            setIsLoading(true);
         }
         resolveTechnicians();
     }, [quote]);
 
-    const {register, handleSubmit, reset, formState: {isValid}} = useForm<FormInputs>();
+    const {register, handleSubmit, formState: {isValid}} = useForm<FormInputs>();
 
     const onSubmit = (data: FormInputs) => {
         console.log(data);
     }
+
+    if (!isLoading)
+        return <div>Loading...</div>
 
     return (
         <div className="text-white">
