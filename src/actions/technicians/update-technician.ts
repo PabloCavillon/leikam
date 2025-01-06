@@ -16,6 +16,7 @@ interface TechnicianUpdated {
 export const updateTechnician = async (technician: TechnicianUpdated) => {
 
     try {
+        const {birthday, ...rest} = technician;
         const technicianBD = await prisma.technicians.findFirst({where:{id:technician.id}})
         if (!technicianBD) {
             console.log("No existe el técnico para modificarlo")
@@ -24,7 +25,8 @@ export const updateTechnician = async (technician: TechnicianUpdated) => {
         const {id: technicianUpdatedId} = await prisma.technicians.update({
             where:{id: technician.id},
             data:{
-                ...technician
+                birthday: new Date(birthday),
+                ...rest
             },
             select:{
                 id:true

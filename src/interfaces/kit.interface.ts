@@ -7,4 +7,5 @@ export interface Kit {
     price: number;
     description?: string;
     products: ProductKit[];
+    expiration_date?: Date | null;
 }

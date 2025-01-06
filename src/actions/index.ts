@@ -6,6 +6,9 @@ export * from './address/create-address'
 // attributes
 export * from './attributes/get-attributes-by-id';
 
+// clients
+export * from './clients/create-client';
+
 // products
 export * from './products/create-product';
 export * from './products/get-product-by-slug';
@@ -13,6 +16,13 @@ export * from './products/get-product-by-id';
 export * from './products/get-product-by-model';
 export * from './products/update-product';
 export * from './products/get-all-products';
+
+// kits
+export * from './kits/create-kit';
+export * from './kits/get-all-kits';
+
+// products kits
+export * from './product-kit/get-product-kit-by-id';
 
 // quotes
 export * from './quotes/create-quote'
@@ -35,3 +45,4 @@ export * from './technicians/get-technician-stats-by-id';
 export * from './technicians/update-technician';
 export * from './technicians/desactivate-technician';
 export * from './technicians/activate-technician';
+export * from './technicians/get-active-technicians';

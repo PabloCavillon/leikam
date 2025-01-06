@@ -1,11 +1,12 @@
 'use client';
 
-import { createProduct, getProductByModel, getProductBySlug, updateProduct } from "@/actions";
-import { Product } from "@/interfaces";
-import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import clsx from "clsx";
+
+import { Product } from "@/interfaces";
+import { createProduct, getProductBySlug, updateProduct } from "@/actions";
 
 type FormInputs = {
     name: string;
@@ -44,7 +45,6 @@ export const ProductForm = ({product}: Props) => {
                     description: product.description,
                     price: product.price,
                     current_stock: product.current_stock,
-                    //TODO category: product.category,
                 });
             }
             setIsLoading(true);
@@ -62,10 +62,6 @@ export const ProductForm = ({product}: Props) => {
                 let product = await getProductBySlug(slug);
                 
                 if (product) return alert("Ya existe un producto con ese nombre");
-                
-                product = await getProductByModel(data.model);
-                
-                if (product) return alert("Ya existe un producto con ese modelo");
                 
                 const dataCorrect = { ...data, slug, current_stock: parseInt(data.current_stock.toString()) };
                 const id  = await createProduct(dataCorrect);

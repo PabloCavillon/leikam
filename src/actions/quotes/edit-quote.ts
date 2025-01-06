@@ -15,11 +15,12 @@ export const editQuote = async ({ id, advance_payment, dolar_value, total_amount
         await prisma.quotes.update({
             where: {id},
             data: {
+                state: 'Pending',
                 advance_payment,
                 creation_date: new Date(),
                 total_amount,
                 dolar_value,
-                labor_cost
+                labor_cost,
             }
         })
         

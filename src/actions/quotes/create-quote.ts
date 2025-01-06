@@ -20,7 +20,7 @@ export const createQuote = async ({ advance_payment, dolar_value, total_amount, 
             total_amount,
             dolar_value,
             labor_cost,
-            slug
+            slug,
           },
           select: {
             id: true
@@ -31,7 +31,7 @@ export const createQuote = async ({ advance_payment, dolar_value, total_amount, 
     
     } catch (error) {
         console.log(error);
-        throw new Error('Ocurrió un problema en el servidor');
+        throw new Error(`Ocurrió un problema en el servidor: ${error}`);
     }
 }
 
@@ -53,7 +53,7 @@ const getLastQuoteSlug = async () => {
     });
     
     if (!lastQuote)
-        throw new Error('Ocurrió un problema en el servidor')
+        return 'Q-00001'; // Si no hay registros, retorna el primer código
 
     // Retorna solo la columna específica si el registro existe
     return lastQuote['slug'];

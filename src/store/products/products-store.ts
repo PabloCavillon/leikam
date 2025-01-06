@@ -21,7 +21,7 @@ interface State {
     removeProductToList: (id: string) => void;
     
     verifyProductIsSelected: (id: string) => boolean;
-    addProductToSelected: (product: Product, quantity: number) => void;
+    addProductToSelected: (product: Product, quantity?: number) => void;
     removeProductFromSelected: (id: string) => void;
     updateQuantityProductSelected: (id: string, quantity: number) => void;
     emptyProductsSelected: () => void;

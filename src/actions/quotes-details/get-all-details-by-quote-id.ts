@@ -25,9 +25,7 @@ export const getAllDetailsByQuoteId = async (quoteId: string): Promise<QuoteDeta
             })
         )
 
-
         return  detailsWithProduct
-
 
     } catch (error) {
         console.log(error);

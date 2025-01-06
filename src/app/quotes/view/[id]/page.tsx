@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { formatDate } from '../../../../util/format-date';
+import { translateState } from '../../../../util/translate-state';
 
 
 type Params = Promise<{id: string}>
@@ -55,7 +56,14 @@ export default function ViewQuotePage({params} : {params: Params}) {
                 <div className="flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-md">
                     <div>
                         <h2 className="text-2xl font-bold text-gray-300">Presupuesto {quote.slug}</h2>
-                        <span className="text-white">{formatDate(quote.creation_date.toString())}</span>
+                        <div className="flex items-center gap-3 text-gray-400">
+                            <span className="text-white">{formatDate(quote.creation_date.toString())}</span>
+                            <span>-</span>
+                            <div className="flex items-center gap-1">
+                                <span className={`inline-block w-3 h-3 rounded-full ${ quote.state }`}></span>
+                                <span>{translateState(quote.state)}</span>
+                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-col items-center text-gray-400">
                         <span className="text-sm">Valor del dólar</span>

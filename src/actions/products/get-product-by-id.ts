@@ -11,13 +11,10 @@ export const getProductById = async (id:string) : Promise<Product> => {
         }) 
 
         if (!product){
-            throw new Error('No se encuentra el producto con el slug: ' + id);
+            throw new Error('No se encuentra el producto con el id: ' + id);
         }   
 
-        const { attribute_id, ...rest  } = product;
-
-
-        return { ...rest };
+        return product;
 
     } catch (error) {
         console.log(error)

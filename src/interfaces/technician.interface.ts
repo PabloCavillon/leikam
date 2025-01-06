@@ -13,7 +13,7 @@ export interface Technician {
     dni: string;
     criminal_records: boolean;
     active?: boolean;
-    birthday: Date | null;
+    birthday: Date;
     stats?: {
       average: number,
       quantity: number

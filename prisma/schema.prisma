@@ -3,155 +3,135 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Addresses {
-  id                 String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  street             String  @db.VarChar(255)
-  number             String  @db.VarChar(10)
-  floor              String? @db.VarChar(10)
-  apartment          String? @db.VarChar(10)
-  city               String  @db.VarChar(255)
-  state              String  @db.VarChar(255)
-  postal_code        String  @db.VarChar(20)
-  additional_comment String? @db.Text
-}
-
-model Attributes {
-  id         String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  color      String? @db.VarChar(50)
-  brand      String? @db.VarChar(255)
-  dimensions String? @db.VarChar(255)
-  weight     Float?  @db.Float
-  definition Int?
-  channels   Int?
+  id                 String  @id @default(uuid())
+  street             String
+  number             String
+  floor              String?
+  apartment          String?
+  city               String
+  state              String
+  postal_code        String
+  additional_comment String?
 }
 
 model Clients {
-  id         String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  address_id String  @db.Char(36)
-  user_id    String? @unique(map: "user_id") @db.Char(36)
-  first_name String  @db.VarChar(255)
-  last_name  String  @db.VarChar(255)
-  phone      String? @db.VarChar(20)
-  email      String? @db.VarChar(255)
+  id         String  @id @default(uuid())
+  address_id String
+  first_name String
+  last_name  String
+  phone      String
+  email      String?
 
-  @@index([address_id], map: "address_id")
+  @@index([address_id], map: "clients_address_id_idx")
 }
 
 model Kits {
-  id          String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  name        String  @unique(map: "name_UNIQUE") @db.VarChar(255)
-  slug        String  @unique(map: "slug_UNIQUE") @db.VarChar(255)
-  description String? @db.Text
-  price       Float   @db.Float
+  id          String  @id @default(uuid())
+  name        String  @unique(map: "kits_name_unique")
+  slug        String  @unique(map: "kits_slug_unique")
+  price       Float
+  expiration_date  DateTime?
 }
 
 model Product_Images {
-  id         String @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  product_id String @db.Char(36)
-  image_url  String @db.VarChar(255)
+  id         String @id @default(uuid())
+  product_id String
+  image_url  String
 
-  @@index([product_id], map: "product_id")
+  @@index([product_id], map: "product_images_product_id_idx")
 }
 
 model Products {
-  id              String  @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  name            String  @unique(map: "name_UNIQUE") @db.VarChar(255)
-  slug            String  @unique(map: "slug_UNIQUE") @db.VarChar(255)
-  model           String  @db.VarChar(255)
-  description     String  @db.Text
-  price           Float   @db.Float
+  id              String  @id @default(uuid())
+  name            String  @unique(map: "products_name_unique")
+  slug            String  @unique(map: "products_slug_unique")
+  model           String
+  description     String
+  price           Float
   current_stock   Int
-  category        String? @db.VarChar(255)
+  category        String?
   warranty_period Int?
-  attribute_id    String? @db.Char(36)
   active          Boolean @default(true)
-
-  @@index([attribute_id], map: "attribute_id")
 }
 
 model Products_Kits {
-  id         String @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  kit_id     String @db.Char(36)
-  product_id String @db.Char(36)
+  id         String @id @default(uuid())
+  kit_id     String
+  product_id String
   quantity   Int
 
-  @@index([kit_id], map: "kit_id")
-  @@index([product_id], map: "product_id")
+  @@index([kit_id], map: "products_kits_kit_id_idx")
+  @@index([product_id], map: "products_kits_product_id_idx")
 }
 
 model Quote_Details {
-  id         String @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  quote_id   String @db.Char(36)
-  product_id String @db.Char(36)
+  id         String @id @default(uuid())
+  quote_id   String
+  product_id String
   quantity   Int
-  unit_price Float  @db.Float
+  unit_price Float
 
-  @@index([product_id], map: "product_id")
-  @@index([quote_id], map: "quote_id")
+  @@index([product_id], map: "quote_details_product_id_idx")
+  @@index([quote_id], map: "quote_details_quote_id_idx")
 }
 
 model Technicians {
-  id               String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  address_id       String    @db.Char(36)
-  user_id          String?   @unique(map: "user_id") @db.Char(36)
-  first_name       String    @db.VarChar(255)
-  last_name        String    @db.VarChar(255)
-  phone            String?   @db.VarChar(20)
-  email            String?   @db.VarChar(255)
-  skills           String?   @db.Text
-  dni              String    @db.VarChar(20)
+  id               String    @id @default(uuid())
+  address_id       String
+  first_name       String
+  last_name        String
+  phone            String?
+  email            String?
+  skills           String?
+  dni              String
   criminal_records Boolean   @default(false)
   active           Boolean   @default(true)
-  birthday         DateTime? @db.DateTime(0)
+  birthday         DateTime?
 
-  @@index([address_id], map: "address_id")
+  @@index([address_id], map: "technicians_address_id_idx")
 }
 
 model Technicians_Work_Orders {
-  id              String @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  work_order_id   String @db.Char(36)
-  technician_id   String @db.Char(36)
-  technician_note Int?   @db.TinyInt
+  id              String @id @default(uuid())
+  work_order_id   String
+  technician_id   String
+  technician_note Int?
 
-  @@index([technician_id], map: "technician_id")
-  @@index([work_order_id], map: "work_order_id")
+  @@index([technician_id], map: "technicians_work_orders_technician_id_idx")
+  @@index([work_order_id], map: "technicians_work_orders_work_order_id_idx")
 }
 
 model Users {
-  id       String     @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  username String     @unique(map: "username") @db.VarChar(255)
-  password String     @db.VarChar(255)
+  id       String   @id @default(uuid())
+  username String   @unique(map: "users_username_unique")
+  password String
   role     Users_role
-  active   Boolean?   @default(true)
+  active   Boolean? @default(true)
 }
 
 model Work_Orders {
-  id            String             @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  client_id     String             @db.Char(36)
-  creation_date DateTime           @default(now()) @db.DateTime(0)
+  id            String             @id @default(uuid())
+  quote_id      String
+  creation_date DateTime           @default(now())
   status        Work_Orders_status
-  comments      String?            @db.Text
-  work_note     Int?               @db.TinyInt
-
-  @@index([client_id], map: "client_id")
+  comments      String?
+  work_note     Int?
 }
 
 model quotes {
-  id              String       @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  user_id         String?      @db.Char(36)
-  creation_date   DateTime     @default(now()) @db.DateTime(0)
-  total_amount    Float        @db.Float
-  slug            String       @db.VarChar(255)
-  dolar_value     Float        @db.Float
-  labor_cost      Float        @default(0) @db.Float
-  advance_payment Float        @default(0) @db.Float
-  state           quotes_state @default(Pendient)
-
-  @@index([user_id], map: "fk_user_id")
+  id              String       @id @default(uuid())
+  creation_date   DateTime     @default(now())
+  total_amount    Float
+  slug            String
+  dolar_value     Float
+  labor_cost      Float        @default(0)
+  advance_payment Float        @default(0)
+  state           quotes_state @default(Pending)
 }
 
 enum Work_Orders_status {
@@ -169,7 +149,7 @@ enum Users_role {
 }
 
 enum quotes_state {
-  Pendient
+  Pending
   Accepted
   Canceled
 }

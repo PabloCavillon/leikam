@@ -19,7 +19,7 @@ type FormInputs = {
     email: string;
     dni: string;
     criminal_records: boolean;
-    birthday: Date;
+    birthday: Date; // Sigue siendo Date
     street: string;
     number: string;
     floor: string;
@@ -39,6 +39,7 @@ export const TechnicianForm = ({ id_technician }: Props) => {
         handleSubmit,
         register,
         reset,
+        setValue,
         formState: { isValid },
     } = useForm<FormInputs>();
     const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +56,12 @@ export const TechnicianForm = ({ id_technician }: Props) => {
                 setIsEdit(true);
                 setIdAddressToEdit(technicianBD.address.id);
                 setIdTechnicianToEdit(technicianBD.id);
+
+                // Convierte birthday a formato YYYY-MM-DD para el input
+                const birthdayFormatted = technicianBD.birthday
+                    ? new Date(technicianBD.birthday).toISOString().split("T")[0]
+                    : "";
+
                 reset({
                     first_name: technicianBD.first_name,
                     last_name: technicianBD.last_name,
@@ -62,7 +69,7 @@ export const TechnicianForm = ({ id_technician }: Props) => {
                     email: technicianBD.email || "",
                     dni: technicianBD.dni,
                     criminal_records: technicianBD.criminal_records,
-                    birthday: technicianBD.birthday || new Date(),
+                    birthday: new Date(technicianBD.birthday), // Se guarda como Date
                     street: technicianBD.address.street,
                     number: technicianBD.address.number,
                     floor: technicianBD.address.floor || "",
@@ -70,14 +77,16 @@ export const TechnicianForm = ({ id_technician }: Props) => {
                     city: technicianBD.address.city,
                     state: technicianBD.address.state,
                     postal_code: technicianBD.address.postal_code,
-                    additional_comment:
-                        technicianBD.address.additional_comment || "",
+                    additional_comment: technicianBD.address.additional_comment || "",
                 });
+
+                // Establecer manualmente el valor del input "date"
+                setValue("birthday", birthdayFormatted as unknown as Date);
             }
             setIsLoading(true);
         };
         resolveProps();
-    }, [id_technician]);
+    }, [id_technician, reset, setValue]);
 
     const onSubmit = async (data: FormInputs) => {
         const {
@@ -108,6 +117,7 @@ export const TechnicianForm = ({ id_technician }: Props) => {
             postal_code,
             additional_comment,
         };
+
         const technicianForm = {
             first_name,
             last_name,
@@ -115,7 +125,7 @@ export const TechnicianForm = ({ id_technician }: Props) => {
             email,
             dni,
             criminal_records,
-            birthday: new Date(birthday),
+            birthday, // Se envía como Date
         };
 
         try {

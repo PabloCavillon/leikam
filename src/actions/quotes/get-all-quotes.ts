@@ -24,7 +24,6 @@ export const gettAllQuotes = async (): Promise<Quote[]> => {
             })
         )
 
-
         return quotesWithDetails
 
     } catch (error) {

@@ -1,7 +1,7 @@
 import { Client } from "./client.interface";
 import { QuoteDetail } from "./quoteDetail.interface";
 
-export type State = 'Pendient' | 'Accepted' | 'Canceled';
+export type State = 'Pending' | 'Accepted' | 'Canceled';
 
 export interface Quote {
     id: string; 

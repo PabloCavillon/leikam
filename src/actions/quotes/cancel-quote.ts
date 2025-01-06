@@ -6,20 +6,17 @@ import { getAllDetailsByQuoteId } from '../quotes-details/get-all-details-by-quo
 
 
 
-export const cancelQuote = async (id: string): Promise<Quote> => {
+export const cancelQuote = async (id: string) => {
 
-    const quoteCanceled = await prisma.quotes.update({
+    await prisma.quotes.update({
         where:{id},
         data:{
             state: 'Canceled'
         }
     })
 
-    const details = await getAllDetailsByQuoteId(quoteCanceled.id);
-
     return {
-        ...quoteCanceled,
-        details
+        ok: true
     };
 
 }

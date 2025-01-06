@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Quote } from "@/interfaces";
 import { getQuoteById } from "@/actions";
 import { useRouter } from "next/navigation";
-import { QuoteForm } from "@/components/quote-form/QuoteForm";
+import { QuoteForm } from "@/components";
 
 type Params = Promise<{id: string}>
 
@@ -49,6 +49,8 @@ export default function QuoteBySlugPage({params} : {params: Params}) {
     }
 
     return (
-        <QuoteForm quote={quote} />
+        <div className="flex w-full justify-center">
+            <QuoteForm quote={quote} />
+        </div>
     );
 }
