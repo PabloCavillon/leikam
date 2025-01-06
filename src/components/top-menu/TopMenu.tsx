@@ -45,7 +45,7 @@ export const TopMenu = () => {
                 </Link>
                 <Link
                     className="px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-orange-600 hover:shadow"
-                    href="/promocionalKits"
+                    href="/kits"
                 >
                     Kits Promocionales
                 </Link>
