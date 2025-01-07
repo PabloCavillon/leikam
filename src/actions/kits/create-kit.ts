@@ -1,20 +1,18 @@
 'use server'
 
-import { Product } from "@/interfaces";
+import { Kit, Product } from "@/interfaces";
 import prisma from "@/lib/prisma";
+import { createProductKit } from "../product-kit/create-product-kit";
 
-interface productWithQuantity extends Product {
+interface ProductWithQuantity extends Product {
     quantity: number;
 }
 
-interface Props {
-    name: string;
-    price: number;
-    expiration_date?: Date;
-    products: productWithQuantity[];
+interface KitWithoutIdAndSlug extends Omit<Kit, "id" | "slug" | "products"> {
+    products: ProductWithQuantity[];
 }
 
-export const createKit = async (data: Props) => {
+export const createKit = async (data: KitWithoutIdAndSlug) => {
     try {
         const {id: kitCreatedId} = await prisma.kits.create({
             data: {
@@ -28,14 +26,8 @@ export const createKit = async (data: Props) => {
             }
         })
 
-        await Promise.all(data.products.map(async (product) => {
-            await prisma.products_Kits.create({
-                data: {
-                    product_id: product.id,
-                    kit_id: kitCreatedId,
-                    quantity: product.quantity
-                }
-            })
+        await Promise.all(data.products.map(async (product:ProductWithQuantity) => {
+            await createProductKit({product, kit_id: kitCreatedId, quantity: product.quantity});
         }))
 
         return {ok:true};

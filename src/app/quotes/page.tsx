@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 
 import { formatDate, formatNumber, translateState } from "@/util";
-import { cancelQuote, gettAllQuotes } from "@/actions";
+import { deleteQuote, gettAllQuotes } from "@/actions";
 import { useQuotesStore } from "@/store";
 import { Quote } from "@/interfaces";
 
@@ -15,22 +15,17 @@ export default function PresupuestoPage() {
     const router = useRouter();
 
     useEffect(() => {
-
         const resolveData = async () => {
             const quotes = await gettAllQuotes();
             loadQuotesList(quotes);
         }
-
         resolveData();
-
     },[router, loadQuotesList])
 
     const handleClickCancel = async (id: string) => {
-        const resp = await cancelQuote(id);
-        if (resp.ok) {
-            const quotes = await gettAllQuotes();
-            loadQuotesList(quotes);
-        }
+        await deleteQuote(id);
+        const quotes = await gettAllQuotes();
+        loadQuotesList(quotes);
     }
 
     useEffect(() => {}, [quotesList]);
@@ -90,7 +85,6 @@ export default function PresupuestoPage() {
                                     {
                                         quote.state === 'Pending' && (
                                             <>
-                                        
                                                 <Link   
                                                     href={`./workOrder/create/${quote.id}`}
                                                     className="text-green-400 hover:text-green-500 font-medium"

@@ -1,31 +1,20 @@
 'use server'
 
 import prisma from "@/lib/prisma";
+import { Quote } from "@/interfaces";
 
-interface Props {
-    id:string,
-    advance_payment: number, 
-    dolar_value: number, 
-    total_amount: number,
-    labor_cost: number,
-}
+interface Props extends Omit<Quote, 'state' | 'creation_date' | 'details' | 'slug'> {}
 
-export const editQuote = async ({ id, advance_payment, dolar_value, total_amount, labor_cost }:Props ) => {
+export const editQuote = async (data:Props ) => {
     try {
         await prisma.quotes.update({
-            where: {id},
+            where: {id: data.id},
             data: {
-                state: 'Pending',
-                advance_payment,
+                ...data,
                 creation_date: new Date(),
-                total_amount,
-                dolar_value,
-                labor_cost,
+                state: 'Pending'
             }
         })
-        
-        return {ok:true}
-    
     } catch (error) {
         console.log(error);
         throw new Error('Ocurrió un problema en el servidor');

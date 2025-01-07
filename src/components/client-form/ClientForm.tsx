@@ -1,96 +1,182 @@
-'use client'
+'use client';
 
 import { useForm } from "react-hook-form";
-/*
-interface ClientWithAddress {
-    first_name: string;
-    last_name: string;
-    phone: string;
-    email?: string; 
-
-    street: string;
-    number: string;
-    floor: string;
-    apartment: string;
-    city: string;
-    state: string;
-    postal_code: string;
-    additional_comment: string;
-}*/
-
 
 export const ClientForm = () => {
+    const { register, handleSubmit, formState: { isValid } } = useForm();
 
-    const {register, handleSubmit, formState: {isValid}} = useForm();
-
-/*    const onSubmit = (data: any) => {
-        console.log(data)
-    }
-*/
     return (
-        <form onSubmit={handleSubmit(console.log)}>
-            <div>
-                <label>Nombre:</label>
-                <input type="text" {...register("first_name", {required: true})} />
+        <form onSubmit={handleSubmit(console.log)} className="space-y-6 bg-gray-800 p-6 rounded-lg shadow-lg">
+            {/* Nombre */}
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300" htmlFor="first_name">
+                    Nombre:
+                </label>
+                <input
+                    type="text"
+                    id="first_name"
+                    {...register("first_name", { required: true })}
+                    className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                />
             </div>
 
-            <div>
-                <label>Apellido:</label>
-                <input type="text" {...register("last_name", {required: true})} />
+            {/* Apellido */}
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300" htmlFor="last_name">
+                    Apellido:
+                </label>
+                <input
+                    type="text"
+                    id="last_name"
+                    {...register("last_name", { required: true })}
+                    className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                />
             </div>
 
-            <div>
-                <label>Telefono:</label>
-                <input type="text" {...register("phone", {required: true})} />
+            {/* Teléfono */}
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300" htmlFor="phone">
+                    Teléfono:
+                </label>
+                <input
+                    type="text"
+                    id="phone"
+                    {...register("phone", { required: true })}
+                    className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                />
             </div>
 
-            <div>
-                <label>Email:</label>
-                <input type="text" {...register("email", {required: false})} /> 
+            {/* Email */}
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300" htmlFor="email">
+                    Email:
+                </label>
+                <input
+                    type="text"
+                    id="email"
+                    {...register("email")}
+                    className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                />
             </div>
 
-            <div>
-                <label>Calle:</label>
-                <input type="text" {...register("street", {required: true})} />
+            {/* Dirección */}
+            <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300" htmlFor="street">
+                        Calle:
+                    </label>
+                    <input
+                        type="text"
+                        id="street"
+                        {...register("street", { required: true })}
+                        className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300" htmlFor="number">
+                        Altura:
+                    </label>
+                    <input
+                        type="text"
+                        id="number"
+                        {...register("number", { required: true })}
+                        className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                    />
+                </div>
             </div>
 
-            <div>
-                <label>Altura:</label>
-                <input type="text" {...register("number", {required: true})} />
+            {/* Piso y Departamento */}
+            <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300" htmlFor="floor">
+                        Piso:
+                    </label>
+                    <input
+                        type="text"
+                        id="floor"
+                        {...register("floor")}
+                        className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300" htmlFor="apartment">
+                        Departamento:
+                    </label>
+                    <input
+                        type="text"
+                        id="apartment"
+                        {...register("apartment")}
+                        className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                    />
+                </div>
             </div>
 
-            <div>
-                <label>Piso:</label>
-                <input type="text" {...register("floor", {required: false})} />
+            {/* Ciudad y Provincia */}
+            <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300" htmlFor="city">
+                        Ciudad:
+                    </label>
+                    <input
+                        type="text"
+                        id="city"
+                        {...register("city", { required: true })}
+                        className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300" htmlFor="state">
+                        Provincia:
+                    </label>
+                    <input
+                        type="text"
+                        id="state"
+                        {...register("state", { required: true })}
+                        className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                    />
+                </div>
             </div>
 
-            <div>
-                <label>Departamento:</label>
-                <input type="text" {...register("apartment", {required: false})} />
+            {/* Código Postal */}
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300" htmlFor="postal_code">
+                    Código Postal:
+                </label>
+                <input
+                    type="text"
+                    id="postal_code"
+                    {...register("postal_code", { required: true })}
+                    className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                />
             </div>
 
-            <div>
-                <label>Ciudad:</label>
-                <input type="text" {...register("city", {required: true})} />
+            {/* Comentarios Adicionales */}
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300" htmlFor="additional_comment">
+                    Comentarios Adicionales:
+                </label>
+                <textarea
+                    id="additional_comment"
+                    {...register("additional_comment")}
+                    className="w-full p-3 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500 resize-none"
+                    rows={4}
+                ></textarea>
             </div>
 
-            <div>
-                <label>Provincia:</label>
-                <input type="text" {...register("state", {required: true})} />
+            {/* Botón Guardar */}
+            <div className="flex justify-end">
+                <button
+                    type="submit"
+                    disabled={!isValid}
+                    className={`py-2 px-4 rounded ${
+                        isValid
+                            ? "bg-orange-600 text-gray-900 hover:bg-orange-500"
+                            : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                    } font-semibold transition`}
+                >
+                    Guardar
+                </button>
             </div>
-
-            <div>
-                <label>Código Postal:</label>
-                <input type="text" {...register("postal_code", {required: true})} />
-            </div>
-
-            <div>
-                <label>Comentarios Adicionales:</label>
-                <textarea {...register("additional_comment", {required: false})} />
-            </div>
-
-            <button type="submit" disabled={!isValid}>Guardar</button>
         </form>
-    )
-
-}
+    );
+};

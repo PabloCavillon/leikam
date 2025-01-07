@@ -1,32 +1,33 @@
 // addresses
+export * from './address/create-address'
 export * from './address/get-address-by-id'
 export * from './address/update-address'
-export * from './address/create-address'
 
 // clients
 export * from './clients/create-client';
 
 // products
 export * from './products/create-product';
-export * from './products/get-product-by-slug';
-export * from './products/get-product-by-id';
-export * from './products/get-product-by-model';
-export * from './products/update-product';
+export * from './products/delete-product';
 export * from './products/get-all-products';
+export * from './products/get-product-by-id';
+export * from './products/get-product-by-slug';
+export * from './products/update-product';
 
 // kits
 export * from './kits/create-kit';
 export * from './kits/get-all-kits';
 
 // products kits
+export * from './product-kit/create-product-kit';
 export * from './product-kit/get-product-kit-by-id';
 
 // quotes
+export * from './quotes/delete-quote'
 export * from './quotes/create-quote'
+export * from './quotes/edit-quote'
 export * from './quotes/get-quote-by-id'
 export * from './quotes/get-all-quotes'
-export * from './quotes/cancel-quote'
-export * from './quotes/edit-quote'
 
 // quote details
 export * from './quotes-details/create-quote-details';

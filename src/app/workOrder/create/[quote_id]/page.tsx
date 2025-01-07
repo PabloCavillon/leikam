@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { getQuoteById } from "@/actions";
 import { WorkOrderForm } from "@/components";
@@ -6,12 +6,9 @@ import { Quote } from "@/interfaces";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
 type Params = Promise<{ quote_id: string }>;
 
-
-export default function CreateWorkOrderPage({params}: {params:Params}) {
-    
+export default function CreateWorkOrderPage({ params }: { params: Params }) {
     const [quote, setQuote] = useState<Quote | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -26,22 +23,24 @@ export default function CreateWorkOrderPage({params}: {params:Params}) {
                 console.log(error);
             }
             setIsLoading(true);
-        }
+        };
         resolveParams();
-    }, [params])
-    
+    }, [params]);
+
     if (!isLoading) {
-        return <div>Loading...</div>
+        return (
+            <div className="flex justify-center items-center min-h-screen bg-gray-900 text-gray-300">
+                <p className="text-lg">Cargando...</p>
+            </div>
+        );
     }
 
-    if (quote === null)
-        return router.push('/quotes');
-    
+    if (quote === null) {
+        router.push('/quotes');
+        return null;
+    }
+
     return (
-        <>
-            <div>
-                <WorkOrderForm quote={quote} />
-            </div>
-        </>
+        <WorkOrderForm quote={quote} />
     );
 }

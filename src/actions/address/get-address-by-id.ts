@@ -3,7 +3,6 @@
 import prisma from "@/lib/prisma";
 import { Address } from "@/interfaces";
 
-
 export const getAddressById = async (id:string): Promise<Address> => {
 
     try {

@@ -1,22 +1,12 @@
 'use server'
 
+import { Address } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
-interface AddressCreated {
-    street: string;
-    number: string;
-    floor: string;
-    apartment: string;
-    city: string;
-    state: string;
-    postal_code: string;
-    additional_comment: string;
-}
+interface AddressWithoutId extends Omit<Address, 'id'> {}
 
-export const createAddress = async (address:AddressCreated) => {
-
+export const createAddress = async (address:AddressWithoutId) => {
     try {
-
         const {id: addressCreatedId} = await prisma.addresses.create({
             data: {
                 ...address
@@ -25,12 +15,9 @@ export const createAddress = async (address:AddressCreated) => {
                 id:true
             }
         })
-
         return addressCreatedId;
-
     } catch (error) {
         console.log(error);
         throw new Error ('Hubo un problema al crear la dirección');
     }
-
 }

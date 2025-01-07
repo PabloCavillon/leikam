@@ -54,8 +54,6 @@ model Products {
   description     String
   price           Float
   current_stock   Int
-  category        String?
-  warranty_period Int?
   active          Boolean @default(true)
 }
 

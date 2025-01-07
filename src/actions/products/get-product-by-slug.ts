@@ -3,7 +3,7 @@
 import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma"
 
-export const getProductBySlug = async (slug:string) : Promise<Product | null> => {
+export const getProductBySlug = async (slug:string) : Promise<Product> => {
 
     try {
         const product = await prisma.products.findFirst({
@@ -11,19 +11,13 @@ export const getProductBySlug = async (slug:string) : Promise<Product | null> =>
         }) 
 
         if (!product)        
-            return null;
+            throw new Error("El producto no existe")
 
-        const { current_stock, warranty_period, ...rest  } = product;
-
-        return {
-            current_stock: current_stock,
-            warranty_period: warranty_period,
-            ...rest
-        };
+        return product;
 
     } catch (error) {
         console.log(error)
-        return null;
+        throw new Error("Ocurrió un problema al obtener el producto")
     }
 
 }

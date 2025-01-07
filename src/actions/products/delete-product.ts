@@ -1,15 +1,23 @@
 'use server'
 
-import { Product } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
-export const updateProduct = async(product: Product) => {
+export const deleteProduct = async(product_id: string) => {
 
     try {
 
+        const product = await prisma.products.findUnique({
+            where: {id: product_id}
+        })
+
+        if (!product)
+            throw new Error("El producto no existe")
+
         const productUpdated = await prisma.products.update({
-            where: {id: product.id},
-            data: {...product, active: false}
+            where: {id: product_id},
+            data: { 
+                active: false
+            }
         })
 
         if (!productUpdated)

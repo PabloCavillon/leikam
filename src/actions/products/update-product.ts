@@ -1,18 +1,11 @@
 'use server'
 
 import prisma from "@/lib/prisma";
+import { Product } from "@/interfaces";
 
-interface ProductUpdated {
-    id: string;
-    current_stock: number;
-    name: string;
-    model: string;
-    description: string;
-    price: number;
-    category: string;
-}
+interface Props extends Omit<Product, 'name' | 'slug' | 'active' | 'photos_url'> {}
 
-export const updateProduct = async(data: ProductUpdated) => {
+export const updateProduct = async(data: Props) => {
 
     try {
 
