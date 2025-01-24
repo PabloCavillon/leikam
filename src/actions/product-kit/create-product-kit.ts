@@ -3,9 +3,9 @@
 import prisma from "@/lib/prisma";
 import { ProductKit } from "@/interfaces";
 
-interface ProductKitWithoutId extends Omit<ProductKit, "id"> {}
+type Props = Omit<ProductKit, "id">
 
-export const createProductKit = async (data: ProductKitWithoutId) => {
+export const createProductKit = async (data: Props) => {
 
     try {
 

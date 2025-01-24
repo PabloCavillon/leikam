@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { toJpeg, toPng } from "html-to-image";
 import { saveAs } from 'file-saver';
 
-import { formatDate, translateState, formatNumber } from '@/util';
+import { formatDate, formatNumber } from '@/util';
 import { getQuoteById } from "@/actions";
 import { Quote } from "@/interfaces";
 import { LuDownload } from "react-icons/lu";

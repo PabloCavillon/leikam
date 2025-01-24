@@ -3,9 +3,9 @@
 import { Address } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
-interface AddressWithoutId extends Omit<Address, 'id'> {}
+type Props = Omit<Address, 'id'>
 
-export const createAddress = async (address:AddressWithoutId) => {
+export const createAddress = async (address:Props) => {
     try {
         const {id: addressCreatedId} = await prisma.addresses.create({
             data: {

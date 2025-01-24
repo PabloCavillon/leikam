@@ -63,9 +63,8 @@ export const ProductForm = ({product}: Props) => {
                 if (product) return alert("Ya existe un producto con ese nombre");
                 
                 const dataCorrect = { ...data, slug, current_stock: parseInt(data.current_stock.toString()) };
-                const id  = await createProduct(dataCorrect);
-                if (!id) alert("Se produjo un error al crear el producto");
-            
+                await createProduct(dataCorrect);
+
             } else {
                 console.log("edit")
                 const dataCorrect = { 
@@ -74,9 +73,7 @@ export const ProductForm = ({product}: Props) => {
                     current_stock: parseInt(data.current_stock.toString()) 
                 };
 
-                const id = await updateProduct(dataCorrect);
-                if (!id) alert("Se produjo un error al actualizar el producto");
-
+                await updateProduct(dataCorrect);
             }
 
             router.push(`/products`);

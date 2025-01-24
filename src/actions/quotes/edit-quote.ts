@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { Quote } from "@/interfaces";
 
-interface Props extends Omit<Quote, 'state' | 'creation_date' | 'details' | 'slug'> {}
+type Props = Omit<Quote, 'state' | 'creation_date' | 'details' | 'slug'>
 
 export const editQuote = async (data:Props ) => {
     try {

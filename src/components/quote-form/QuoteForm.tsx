@@ -93,7 +93,7 @@ export const QuoteForm = ({quote}: Props) => {
 
     const handleUpdateQuote = async () => {
         if (!quote) return;
-        const { ok } = await editQuote({
+        await editQuote({
             id: quote.id,
             advance_payment: advancePayment, 
             dolar_value: dolarValue, 
@@ -101,8 +101,6 @@ export const QuoteForm = ({quote}: Props) => {
             total_amount: calculateTotal()
         });
 
-        if (!ok) return;
-        
         const resp = await editQuoteDetails(productsSelected, quote.id);
         
         emptyProductsSelected()

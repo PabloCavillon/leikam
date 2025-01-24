@@ -3,7 +3,7 @@
 import { Product } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
-interface Props extends Omit<Product, 'id' | 'slug' | 'active' | 'photos_url'> {}
+type Props = Omit<Product, 'id' | 'slug' | 'active' | 'photos_url'>
 
 export const createProduct = async (data: Props) => {
     try {
