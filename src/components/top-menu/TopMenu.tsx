@@ -11,7 +11,7 @@ export const TopMenu = () => {
         <nav className="flex px-5 h-16 justify-between items-center w-full bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 text-white shadow-md">
             {/* Logo */}
             <div>
-                <Link href="/" className="flex items-center">
+                <Link href="/quotes" className="flex items-center">
                     <span className={`${titleFont.className} font-bold text-xl`}>Leikam</span>
                     <span className="ml-2 text-sm font-light">| Sistema de Gestión</span>
                 </Link>
@@ -25,6 +25,7 @@ export const TopMenu = () => {
                 >
                     Presupuestos
                 </Link>
+                {/*
                 <Link
                     className="px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-orange-600 hover:shadow"
                     href="/workOrder"
@@ -36,7 +37,7 @@ export const TopMenu = () => {
                     href="/technicians"
                 >
                     Técnicos
-                </Link>
+                </Link>*/}
                 <Link
                     className="px-3 py-2 rounded-md text-sm font-medium transition-all hover:bg-orange-600 hover:shadow"
                     href="/products"

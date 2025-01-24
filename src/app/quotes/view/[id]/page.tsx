@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toJpeg } from "html-to-image";
+import { toJpeg, toPng } from "html-to-image";
 import { saveAs } from 'file-saver';
 
 import { formatDate, translateState, formatNumber } from '@/util';
@@ -11,11 +11,11 @@ import { getQuoteById } from "@/actions";
 import { Quote } from "@/interfaces";
 import { LuDownload } from "react-icons/lu";
 import { CiEdit } from "react-icons/ci";
+import { LuCopy } from "react-icons/lu";
 
-type Params = Promise<{id: string}>
+type Params = Promise<{ id: string }>;
 
-export default function ViewQuotePage({params} : {params: Params}) {
-
+export default function ViewQuotePage({ params }: { params: Params }) {
     const [quote, setQuote] = useState<Quote | null>(null);
     const [isloading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -32,9 +32,9 @@ export default function ViewQuotePage({params} : {params: Params}) {
                 router.push("/quotes");
             }
             setIsLoading(true);
-        }
+        };
         fetchQuote();
-    }, [params, router])
+    }, [params, router]);
 
     const handleDownload = async () => {
         const tableElement = document.getElementById('table-to-download');
@@ -44,9 +44,37 @@ export default function ViewQuotePage({params} : {params: Params}) {
             const dataUrl = await toJpeg(tableElement, { quality: 0.95 });
             saveAs(dataUrl, `Presupuesto-${quote?.slug}.jpg`);
         } catch (error) {
-            console.error('Error exporting table:', error);
+            console.error('Error al exportar la tabla:', error);
         }
-    }
+    };
+
+    const handleCopy = async () => {
+        const tableElement = document.getElementById('table-to-download');
+        if (!tableElement) return;
+    
+        try {
+            // Generar la imagen en formato PNG
+            const dataUrl = await toPng(tableElement, { quality: 1.0 });
+            const blob = await (await fetch(dataUrl)).blob();
+    
+            // Verificar si el navegador soporta ClipboardItem
+            if (!navigator.clipboard || !window.ClipboardItem) {
+                alert("La funcionalidad de copiar al portapapeles no es soportada en este navegador.");
+                return;
+            }
+    
+            // Crear el objeto ClipboardItem con el tipo MIME correcto
+            const clipboardItem = new ClipboardItem({ "image/png": blob });
+    
+            // Copiar la imagen al portapapeles
+            await navigator.clipboard.write([clipboardItem]);
+    
+            alert("Imagen copiada al portapapeles con éxito.");
+        } catch (error) {
+            console.error('Error copiando la imagen:', error);
+            alert("Error al copiar la imagen. Por favor, verifica los permisos del navegador.");
+        }
+    };
 
     if (!isloading) {
         return (
@@ -92,15 +120,15 @@ export default function ViewQuotePage({params} : {params: Params}) {
                         <tbody>
                             {quote.details.map((qd) => (
                                 <tr
-                                key={qd.id}
-                                className="bg-gray-800 hover:bg-gray-700 transition border-b border-gray-700"
+                                    key={qd.id}
+                                    className="bg-gray-800 hover:bg-gray-700 transition border-b border-gray-700"
                                 >
                                     <td className="p-4 pl-6 flex items-center gap-2">
                                         <Link
                                             href={`/product/${qd.product.slug}`}
                                             className="text-orange-500 hover:underline transition"
                                         >
-                                            {qd.product.name} 
+                                            {qd.product.name}
                                         </Link>
                                     </td>
                                     <td className="p-4 text-center">
@@ -113,7 +141,7 @@ export default function ViewQuotePage({params} : {params: Params}) {
                                     <td className="p-4 text-center flex flex-col items-center">
                                         <span
                                             className="text-lg font-bold flex justify-center items-center gap-1 text-orange-500"
-                                            >
+                                        >
                                             {qd.quantity}
                                         </span>
                                     </td>
@@ -126,13 +154,13 @@ export default function ViewQuotePage({params} : {params: Params}) {
                             ))}
                             <tr className="bg-gray-800 border-t-4 border-orange-500 hover:bg-gray-700 transition">
                                 <td colSpan={3} className="p-4 text-left font-medium">
-                                    Mano de Obra 
+                                    Mano de Obra
                                 </td>
                                 <td className="p-4 text-center font-bold">
                                     <span
                                         className="text-lg font-bold flex items-center gap-1 justify-center text-white"
-                                        >
-                                        $ {formatNumber(quote.labor_cost ,2)}
+                                    >
+                                        $ {formatNumber(quote.labor_cost, 2)}
                                     </span>
                                 </td>
                             </tr>
@@ -144,7 +172,7 @@ export default function ViewQuotePage({params} : {params: Params}) {
                                         <span> Seña: $ </span>
                                         <span
                                             className="text-lg font-bold flex gap-1 items-center text-white"
-                                            >
+                                        >
                                             {formatNumber(quote.advance_payment, 2)}
                                         </span>
                                     </div>
@@ -171,7 +199,14 @@ export default function ViewQuotePage({params} : {params: Params}) {
                         className="bg-orange-600 text-gray-900 px-6 py-2 rounded-lg text-lg font-semibold hover:bg-orange-500 transition flex items-center gap-2"
                     >
                         <span>Descargar</span>
-                        <LuDownload /> 
+                        <LuDownload />
+                    </button>
+                    <button
+                        onClick={handleCopy}
+                        className="bg-orange-600 text-gray-900 px-6 py-2 rounded-lg text-lg font-semibold hover:bg-orange-500 transition flex items-center gap-2"
+                    >
+                        <span>Copiar</span>
+                        <LuCopy />
                     </button>
                 </div>
             </div>
