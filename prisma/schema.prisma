@@ -31,11 +31,11 @@ model Clients {
 }
 
 model Kits {
-  id          String  @id @default(uuid())
-  name        String  @unique(map: "kits_name_unique")
-  slug        String  @unique(map: "kits_slug_unique")
-  price       Float
-  expiration_date  DateTime?
+  id              String    @id @default(uuid())
+  name            String    @unique(map: "kits_name_unique")
+  slug            String    @unique(map: "kits_slug_unique")
+  price           Float
+  expiration_date DateTime?
 }
 
 model Product_Images {
@@ -47,14 +47,14 @@ model Product_Images {
 }
 
 model Products {
-  id              String  @id @default(uuid())
-  name            String  @unique(map: "products_name_unique")
-  slug            String  @unique(map: "products_slug_unique")
-  model           String
-  description     String
-  price           Float
-  current_stock   Int
-  active          Boolean @default(true)
+  id            String  @id @default(uuid())
+  name          String  @unique(map: "products_name_unique")
+  slug          String  @unique(map: "products_slug_unique")
+  model         String
+  description   String
+  price         Float
+  current_stock Int
+  active        Boolean @default(true)
 }
 
 model Products_Kits {
@@ -68,26 +68,27 @@ model Products_Kits {
 }
 
 model Quote_Details {
-  id         String @id @default(uuid())
+  id         String  @id @default(uuid())
   quote_id   String
-  product_id String
+  product_id String?
   quantity   Int
   unit_price Float
+  kit_id     String?
 
   @@index([product_id], map: "quote_details_product_id_idx")
   @@index([quote_id], map: "quote_details_quote_id_idx")
 }
 
 model Technicians {
-  id               String    @id @default(uuid())
+  id               String   @id @default(uuid())
   address_id       String
   first_name       String
   last_name        String
   phone            String
   email            String?
   dni              String
-  criminal_records Boolean   @default(false)
-  active           Boolean   @default(true)
+  criminal_records Boolean  @default(false)
+  active           Boolean  @default(true)
   birthday         DateTime
 
   @@index([address_id], map: "technicians_address_id_idx")
@@ -104,11 +105,11 @@ model Technicians_Work_Orders {
 }
 
 model Users {
-  id       String   @id @default(uuid())
-  username String   @unique(map: "users_username_unique")
+  id       String     @id @default(uuid())
+  username String     @unique(map: "users_username_unique")
   password String
   role     Users_role
-  active   Boolean? @default(true)
+  active   Boolean?   @default(true)
 }
 
 model Work_Orders {
@@ -120,8 +121,8 @@ model Work_Orders {
   work_note     Int?
 }
 
-model quotes {
-  id              String       @id @default(uuid())
+model Quotes {
+  id              String       @id(map: "quotes_pkey") @default(uuid())
   creation_date   DateTime     @default(now())
   total_amount    Float
   slug            String

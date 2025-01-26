@@ -3,11 +3,13 @@
 import { Quote } from "@/interfaces"
 import prisma from "@/lib/prisma"
 import { getProductById } from "../products/get-product-by-id"
+import { getKitById } from "../kits/get-kit-by-id";
 
 export interface QuoteDetail {
     id: string;
     quote_id: string; 
-    product_id: string;  
+    product_id: string | null;
+    kit_id: string | null;  
     quantity: number;
     unit_price: number;
 }
@@ -36,11 +38,30 @@ export const getQuoteById = async (id: string) : Promise<Quote> => {
 
         const quoteDetailsWithProduct = await Promise.all(
             quoteDetails.map(async (qd: QuoteDetail) => {
-                const product = await getProductById(qd.product_id);
+                
+                const {product_id, kit_id, ...rest} = qd;
+
+                if (product_id) {
+                    const product = await getProductById(product_id);
+                    return {
+                        product,
+                        kit: null,
+                        ...rest
+                    }
+                }
+                if (kit_id !== null) {
+                    const kit = await getKitById(kit_id);
+                    return {
+                        kit,
+                        product: null,
+                        ...rest
+                    }
+                }
                 return {
-                    ...qd,
-                    product
-                };
+                    product: null,
+                    kit: null,
+                    ...rest
+                }
             })
         );
 

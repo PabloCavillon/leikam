@@ -1,19 +1,23 @@
-'use client'
+'use client';
 
-import { getAllProducts } from "@/actions"
-import { Product } from "@/interfaces"
-import { useProductStore } from "@/store"
-import { formatNumber } from "@/util"
-import clsx from "clsx"
-import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import clsx from "clsx";
 
+import { getAllProducts } from "@/actions";
+import { formatNumber } from "@/util";
+import { useProductStore } from "@/store";
+
+import { Product } from "@/interfaces";
+import { useRouter } from "next/navigation";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 interface ProductWithQuantity extends Product {
     quantity: number;
 }
 
 export const TableProducts = () => {
+    const router = useRouter();
 
     const [productsList, setProductsList] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -23,9 +27,9 @@ export const TableProducts = () => {
     const productsSelected = useProductStore((state) => state.productsSelected);
     const addProductToSelected = useProductStore((state) => state.addProductToSelected);
     const removeProductFromSelected = useProductStore((state) => state.removeProductFromSelected);
-    const verifyProductIsSelected = useProductStore( (state) => state.verifyProductIsSelected);
+    const verifyProductIsSelected = useProductStore((state) => state.verifyProductIsSelected);
 
-     const handleSelectProduct = (product: ProductWithQuantity ) => {
+    const handleSelectProduct = (product: ProductWithQuantity) => {
         if (verifyProductIsSelected(product.id)) {
             removeProductFromSelected(product.id);
         } else {
@@ -36,45 +40,46 @@ export const TableProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const products = await getAllProducts(); 
-                setProductsList(products)
-                setFilteredProducts(products)
+                const products = await getAllProducts();
+                setProductsList(products);
+                setFilteredProducts(products);
             } catch (error) {
                 console.log("Error al obtener los productos", error);
             }
             setIsLoading(true);
-        }
-        fetchProducts()
-    }, [] )
+        };
+        fetchProducts();
+    }, []);
 
     useEffect(() => {
         if (!filter) {
             setFilteredProducts(productsList);
             return;
         }
-    
-        const keywords = filter.toLowerCase().split(" "); // Dividir el filtro en palabras clave
-        const filtered = productsList.filter((product) => {
-            // Verificar que todas las palabras clave estén presentes en el nombre del producto
-            return keywords.every((keyword) => 
+
+        const keywords = filter.toLowerCase().split(" ");
+        const filtered = productsList.filter((product) =>
+            keywords.every((keyword) =>
                 product.name.toLowerCase().includes(keyword)
-            );
-        });
-    
+            )
+        );
+
         setFilteredProducts(filtered);
     }, [filter, productsList, productsSelected]);
 
     if (!isLoading)
-        return <div className="flex justify-center items-center h-screen">
-            <div className="loader"></div>
-        </div>
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="loader"></div>
+            </div>
+        );
 
     return (
-        <div className="overflow-hidden shadow-lg rounded-lg bg-gray-800">
+        <div className="overflow-x-auto bg-gray-800 shadow-lg rounded-lg">
             <table className="table-auto w-full text-gray-300">
                 <thead>
                     <tr className="bg-gray-800">
-                        <td colSpan={7} className="p-4">
+                        <td colSpan={6} className="p-4">
                             <div className="relative">
                                 <input
                                     type="text"
@@ -100,26 +105,11 @@ export const TableProducts = () => {
                         </td>
                     </tr>
                     <tr className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 text-white">
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
-                            Seleccionar
+                        <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold uppercase">
+                            Detalles
                         </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
-                            Nombre
-                        </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
-                            Modelo
-                        </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
+                        <th className="hidden sm:table-cell px-4 sm:px-6 py-3 text-center text-sm font-semibold uppercase">
                             Descripción
-                        </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
-                            Precio
-                        </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
-                            Stock
-                        </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold uppercase">
-                            Acción
                         </th>
                     </tr>
                 </thead>
@@ -128,48 +118,39 @@ export const TableProducts = () => {
                         <tr
                             key={product.slug}
                             className={clsx(
-                                "transition-all",
-                                index % 2 === 0
+                                "transition-all cursor-pointer",
+                                verifyProductIsSelected(product.id)
+                                    ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                                    : index % 2 === 0
                                     ? "bg-gray-700 hover:bg-gray-600"
                                     : "bg-gray-800 hover:bg-gray-600"
                             )}
+                            onClick={() =>
+                                handleSelectProduct({ ...product, quantity: 1 })
+                            }
+                            onDoubleClick={() => router.push(`/products/edit/${product.slug}`)}   
                         >
-                            <td className="px-6 py-4 text-center">
-                                <input
-                                    onChange={() => handleSelectProduct({ ...product, quantity: 1 })}
-                                    type="checkbox"
-                                    className="hover:cursor-pointer w-4 h-4 text-orange-500 bg-gray-900 border-gray-600 rounded focus:ring-2 focus:ring-orange-500"
-                                    checked={verifyProductIsSelected(product.id)}
-                                />
+                            <td className="px-4 sm:px-6 py-4 text-sm">
+                                <div>
+                                    <span className="font-bold">
+                                        {product.name}
+                                    </span>
+                                    <br />
+                                    {/*<span className="text-gray-300">
+                                        Modelo: {product.model}
+                                    </span>*/}
+                                </div>
+                                <div className="mt-2">
+                                    <span className="block text-sm">
+                                        Precio: {formatNumber(product.price, 2)}
+                                    </span>
+                                    <span className="block text-sm">
+                                        Stock: {product.current_stock}
+                                    </span>
+                                </div>
                             </td>
-                            <td className="px-6 py-4 text-sm text-center">
-                                {product.name}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-center">
-                                {product.model}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-center">
+                            <td className="hidden sm:table-cell px-4 sm:px-6 py-4 text-sm text-center">
                                 {product.description || "-"}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-center">
-                                {formatNumber(product.price, 2)}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-center">
-                                {product.current_stock}
-                            </td>
-                            <td className="px-6 py-4 flex justify-center gap-3">
-                                <Link
-                                    href={`/products/edit/${product.slug}`}
-                                    className="text-blue-400 hover:text-blue-500 transition hover:underline"
-                                >
-                                    Editar
-                                </Link>
-                                <button
-                                    onClick={() => console.log("Eliminar producto")}
-                                    className="text-red-300 hover:text-red-400 transition hover:underline"
-                                >
-                                    Eliminar
-                                </button>
                             </td>
                         </tr>
                     ))}
@@ -177,4 +158,4 @@ export const TableProducts = () => {
             </table>
         </div>
     );
-}
+};

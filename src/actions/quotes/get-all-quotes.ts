@@ -4,16 +4,7 @@ import { Quote, State } from '@/interfaces';
 import prisma from '@/lib/prisma';
 import { getAllDetailsByQuoteId } from '@/actions';
 
-interface QuoteWithoutDetails {
-    id: string; 
-    creation_date: Date;
-    total_amount: number;
-    dolar_value: number;
-    slug: string;
-    labor_cost:number;
-    advance_payment: number;
-    state: State
-}
+type Props = Omit<Quote, 'details'>;
 
 export const gettAllQuotes = async (): Promise<Quote[]> => {
 
@@ -23,7 +14,7 @@ export const gettAllQuotes = async (): Promise<Quote[]> => {
         })
 
         const quotesWithDetails = await Promise.all(
-            quotes.map(async (quote: QuoteWithoutDetails) => {
+            quotes.map(async (quote: Props) => {
 
                 const {id, ...rest} = quote;
 

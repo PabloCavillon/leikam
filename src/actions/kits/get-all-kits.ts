@@ -4,19 +4,13 @@ import { Kit } from "@/interfaces";
 import prisma from "@/lib/prisma";
 import { getAllProductKits } from "../product-kit/get-product-kit-by-id";
 
-interface KitWithoutProducts {
-    id: string; 
-    name: string;
-    slug: string;
-    price: number;
-    expiration_date?: Date | null;
-}
+type Props = Omit<Kit, 'products'>;
 
 export const getAllKits = async () : Promise<Kit[]> => {
     try {
         const kits = await prisma.kits.findMany();
         
-        const kitsUpdated = Promise.all(kits.map(async (kit: KitWithoutProducts) => {
+        const kitsUpdated = await Promise.all(kits.map(async (kit: Props) => {
             const productsKits = await getAllProductKits(kit.id);
 
             return { ...kit, products: productsKits }

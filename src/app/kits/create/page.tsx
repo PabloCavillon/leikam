@@ -54,26 +54,25 @@ export default function CreateKitPage() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full max-w-3xl bg-gray-800 rounded-lg shadow-lg p-6 space-y-6"
             >
-                {/* Campo Nombre */}
-                <div className="space-y-2">
-                    <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-gray-300"
-                    >
-                        Nombre *
-                    </label>
-                    <input
-                        {...register("name", { required: true })}
-                        type="text"
-                        id="name"
-                        className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
-                    />
-                </div>
+                <div className="flex justify-between items-center gap-3">
+                    {/* Campo Nombre */}
+                    <div className="space-y-2 w-2/3">
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium text-gray-300"
+                        >
+                            Nombre *
+                        </label>
+                        <input
+                            {...register("name", { required: true })}
+                            type="text"
+                            id="name"
+                            className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
+                        />
+                    </div>
 
-                {/* Campo Precio y Fecha Expiración */}
-                <div className="flex gap-6">
                     {/* Campo Precio */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="space-y-2 w-1/3">
                         <label
                             htmlFor="price"
                             className="block text-sm font-medium text-gray-300"
@@ -83,43 +82,12 @@ export default function CreateKitPage() {
                         <input
                             {...register("price", { required: true })}
                             type="number"
+                            step={0.01}
                             id="price"
                             className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
                         />
                     </div>
-
-                    {/* Campo Fecha Expiración */}
-                    <div className="flex flex-col w-1/2">
-                        <label
-                            htmlFor="expiration_date"
-                            className="block text-sm font-medium text-gray-300"
-                        >
-                            Fecha expiración
-                        </label>
-                        <input
-                            {...register("expiration_date")}
-                            type="date"
-                            id="expiration_date"
-                            className="w-full p-2 h-[42px] rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500"
-                        />
-                    </div>
                 </div>
-
-                {/* Campo Descripción
-                <div className="space-y-2">
-                    <label
-                        htmlFor="description"
-                        className="block text-sm font-medium text-gray-300"
-                    >
-                        Descripción
-                    </label>
-                    <textarea
-                        {...register("description")}
-                        id="description"
-                        className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500 resize-none"
-                        rows={4}
-                    ></textarea>
-                </div> */}
 
                 {/* Lista de productos seleccionados */}
                 <div className="space-y-2">

@@ -124,17 +124,37 @@ export default function ViewQuotePage({ params }: { params: Params }) {
                                     className="bg-gray-800 hover:bg-gray-700 transition border-b border-gray-700"
                                 >
                                     <td className="p-4 pl-6 flex items-center gap-2">
-                                        <Link
-                                            href={`/product/${qd.product.slug}`}
-                                            className="text-orange-500 hover:underline transition"
-                                        >
-                                            {qd.product.name}
-                                        </Link>
+                                        {qd.product && (
+                                            <Link
+                                                href={`/product/${qd.product.slug}`}
+                                                className="text-orange-500 hover:underline transition"
+                                            >
+                                                {qd.product.name}
+                                            </Link>
+                                        )}
+                                        {qd.kit && (
+                                            <div>
+                                                <Link
+                                                    href={`/kits/${qd.kit.id}`}
+                                                    className="text-orange-500 hover:underline transition"
+                                                    >
+                                                    {qd.kit.name.toUpperCase()}
+                                                </Link>
+                                                <ul>
+                                                    {qd.kit.products.map((product) => (
+                                                        <li key={product.id} className="text-sm text-gray-400">
+                                                            {product.quantity} x {product.product.name}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
                                     </td>
                                     <td className="p-4 text-center">
                                         <div className="flex flex-col items-center">
                                             <span className="font-bold">
-                                                $ {formatNumber(qd.unit_price * quote.dolar_value, 2)}
+                                            {qd.kit && ( <>$ {formatNumber(qd.unit_price, 2)}</>)}
+                                            {qd.product && ( <>$ {formatNumber(qd.unit_price * quote.dolar_value, 2)}</>)}
                                             </span>
                                         </div>
                                     </td>
@@ -147,7 +167,8 @@ export default function ViewQuotePage({ params }: { params: Params }) {
                                     </td>
                                     <td className="p-4 text-center">
                                         <span className="font-bold">
-                                            $ {formatNumber(qd.unit_price * quote.dolar_value * qd.quantity, 2)}
+                                            {qd.kit && ( <>$ {formatNumber(qd.unit_price * qd.quantity, 2)}</>)}
+                                            {qd.product && ( <>$ {formatNumber(qd.unit_price * quote.dolar_value * qd.quantity, 2)}</>)}
                                         </span>
                                     </td>
                                 </tr>

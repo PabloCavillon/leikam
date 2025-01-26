@@ -18,8 +18,7 @@ export default function QuoteBySlugPage({params} : {params: Params}) {
 
         const fetchQuote = async () => {
             try {
-
-                const { id } = await params;
+                const {id} = await params;
                 const resp = await getQuoteById(id);
                 setQuote(resp);            
             } catch (error) {
@@ -32,7 +31,7 @@ export default function QuoteBySlugPage({params} : {params: Params}) {
         fetchQuote();
     }, [params, router])
 
-    if(!isLoading) {
+    if (!isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="loader"></div>

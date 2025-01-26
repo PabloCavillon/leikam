@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { CiEdit } from 'react-icons/ci';
 
-import { useDolarValue, useProductStore} from '@/store';
+import { useDolarValue, useKitsStore, useProductStore} from '@/store';
 import { Product, Quote } from '@/interfaces';
 import { formatNumber } from '@/util';
 import { createQuote } from '../../actions/quotes/create-quote';
@@ -23,8 +23,12 @@ export const QuoteForm = ({quote}: Props) => {
     const productsSelected = useProductStore((store) => store.productsSelected);
     const removeProductFromSelected = useProductStore((store) => store.removeProductFromSelected);
 
+    const kitsSelected = useKitsStore((store) => store.kitsSelected);
+    const removeKitFromSelected = useKitsStore((store) => store.removeKitFromSelected);
+
+    const updateQuantityKitSelected = useKitsStore((store) => store.updateQuantityKitSelected);
     const updateQuantityProductSelected = useProductStore((store) => store.updateQuantityProductSelected);
-    const [editQuantityProductOpen, setEditQuantityProductOpen] = useState(false);
+    const [editQuantityOpen, setEditQuantityOpen] = useState(false);
 
     const dolarValue = useDolarValue((store) => store.dolarValue);
     const setDolarValue = useDolarValue((store) => store.setDolarValue);
@@ -37,6 +41,7 @@ export const QuoteForm = ({quote}: Props) => {
     const [editAdvancePaymentOpen, setEditAdvancePaymentOpen] = useState(false);
     
     const emptyProductsSelected = useProductStore((store) => store.emptyProductsSelected);
+    const emptyKitsSelected = useKitsStore((store) => store.emptyKitsSelected);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     
@@ -60,15 +65,26 @@ export const QuoteForm = ({quote}: Props) => {
             return acc + p.price * dolarValue * p.quantity;
         }, 0);
         
-        return totalProducts + laborCost - advancePayment;
+        const totalKits = kitsSelected.reduce((acc, k) => { 
+            return acc + k.price * k.quantity;
+        }, 0);
+
+        return totalKits + totalProducts + laborCost - advancePayment;
     };
 
     const handleDeselectProduct = (id: string) => {
         removeProductFromSelected(id);
     }
+    const handleDeselectKit = (id: string) => {
+        removeKitFromSelected(id);
+    }
 
     const handlechangeQuantityProduct = (id: string, quantity: number) => {
         updateQuantityProductSelected(id, quantity);
+    }   
+
+    const handlechangeQuantityKit = (id: string, quantity: number) => {
+        updateQuantityKitSelected(id, quantity);
     }   
 
     const handleCreateQuote = async () => {
@@ -83,12 +99,11 @@ export const QuoteForm = ({quote}: Props) => {
             return;
         }
         console.log(productsSelected)
-        const resp = await createQuoteDetails(productsSelected, quote_id);
-        
+        await createQuoteDetails(kitsSelected, productsSelected, quote_id);
         emptyProductsSelected();
+        emptyKitsSelected();
 
-        if (resp.ok) 
-            router.push(`/quotes/view/${quote_id}`);
+        router.push(`/quotes/view/${quote_id}`);
     }
 
     const handleUpdateQuote = async () => {
@@ -155,6 +170,74 @@ export const QuoteForm = ({quote}: Props) => {
                         </tr>
                     </thead>
                     <tbody>
+                        {kitsSelected.map((k) => (
+                            <tr
+                                key={k.id}
+                                className="bg-gray-800 hover:bg-gray-700 transition border-b border-gray-700"
+                            >
+                                <td className="p-4 pl-6 flex items-start gap-2 flex-col">
+                                    <div className='flex items-center justify-start gap-2'>
+                                        {k.name.toUpperCase()} 
+                                        <span onClick={() => handleDeselectKit(k.id)}>
+                                            <FaRegTrashAlt className="text-red-500 hover:cursor-pointer hover:underline transition hover:scale-125 hover:text-red-600"/>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <ul className='space-y-2 text-xs pl-4 text-gray-300'>
+                                            {k.products.map((p) => (
+                                                <li key={p.id} className="text-gray-400 flex items-center gap-2">
+                                                    <span className="text-orange-400 font-bold text-base">
+                                                        {p.quantity}
+                                                    </span>
+                                                    <span>x</span>
+                                                    <span>{p.product.name}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td className="p-4 text-center">
+                                    <div className="flex flex-col items-center">
+                                        <span className="font-bold">
+                                            $ {formatNumber(k.price, 2)}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td className="p-4 text-center">
+                                    <div className='flex flex-col items-center justify-center h-full'>
+                                        <span
+                                            className={clsx(
+                                                "text-lg font-bold flex justify-center items-center gap-1 text-orange-500 hover:cursor-pointer hover:underline transition",
+                                                editQuantityOpen && "hidden"
+                                            )}
+                                            onClick={() => setEditQuantityOpen(true)}
+                                            >
+                                            {formatNumber(k.quantity, 0)} <CiEdit size={22}/>
+                                        </span>
+                                        <span
+                                            className={clsx(
+                                                "text-lg font-bold text-orange-500 flex items-center gap-3",
+                                                !editQuantityOpen && "hidden"
+                                            )}
+                                            >
+                                            <input
+                                                type="number"
+                                                value={k.quantity}
+                                                onKeyDown={(e) => e.key === 'Enter' && setEditQuantityOpen(false)}
+                                                onChange={(e) => handlechangeQuantityKit(k.id, Number(e.target.value))}
+                                                className="w-16 text-center p-1 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                                                />
+                                        </span>
+                                    </div>
+                                </td>
+                                <td className="p-4 text-center">
+                                    <span className="font-bold">
+                                        $ {formatNumber(k.price * k.quantity, 2)} 
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                        <tr className="border-t-2 border-orange-500"></tr>
                         {productsSelected.map((p) => (
                             <tr
                                 key={p.id}
@@ -185,22 +268,22 @@ export const QuoteForm = ({quote}: Props) => {
                                     <span
                                         className={clsx(
                                             "text-lg font-bold flex justify-center items-center gap-1 text-orange-500 hover:cursor-pointer hover:underline transition",
-                                            editQuantityProductOpen && "hidden"
+                                            editQuantityOpen && "hidden"
                                         )}
-                                        onClick={() => setEditQuantityProductOpen(true)}
+                                        onClick={() => setEditQuantityOpen(true)}
                                     >
                                         {formatNumber(p.quantity, 0)} <CiEdit size={22}/>
                                     </span>
                                     <span
                                         className={clsx(
                                             "text-lg font-bold text-orange-500 flex items-center gap-3",
-                                            !editQuantityProductOpen && "hidden"
+                                            !editQuantityOpen && "hidden"
                                         )}
                                     >
                                         <input
                                             type="number"
                                             value={p.quantity}
-                                            onKeyDown={(e) => e.key === 'Enter' && setEditQuantityProductOpen(false)}
+                                            onKeyDown={(e) => e.key === 'Enter' && setEditQuantityOpen(false)}
                                             onChange={(e) => handlechangeQuantityProduct(p.id, Number(e.target.value))}
                                             className="w-16 text-center p-1 rounded bg-gray-700 border border-gray-600 text-gray-200 focus:ring-2 focus:ring-orange-500 focus:outline-none"
                                         />
@@ -302,12 +385,6 @@ export const QuoteForm = ({quote}: Props) => {
                         </button>
         
                     )}
-                    <button 
-                        onClick={() => showProductsModal()}
-                        className="bg-orange-600 text-gray-900 px-6 py-2 rounded-lg text-lg font-semibold hover:bg-orange-500 transition"
-                    >
-                        Agregar productos
-                    </button>
                 </div>
             </div>
             {isModalOpen && <ProductsModal handleClose={() => {setIsModalOpen(false)}} />}

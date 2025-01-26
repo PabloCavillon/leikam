@@ -17,6 +17,7 @@ export * from './products/update-product';
 // kits
 export * from './kits/create-kit';
 export * from './kits/get-all-kits';
+export * from './kits/get-kit-by-id';
 
 // products kits
 export * from './product-kit/create-product-kit';
