@@ -49,7 +49,7 @@ export const getQuoteById = async (id: string) : Promise<Quote> => {
                         ...rest
                     }
                 }
-                if (kit_id !== null) {
+                if (kit_id) {
                     const kit = await getKitById(kit_id);
                     return {
                         kit,

@@ -29,7 +29,7 @@ export default function QuoteBySlugPage({params} : {params: Params}) {
             setIsLoading(true);
         }
         fetchQuote();
-    }, [params, router])
+    }, [router])
 
     if (!isLoading) {
         return (

@@ -61,7 +61,7 @@ export const QuoteForm = ({quote}: Props) => {
         loadProductsSelected(quote.details);
         loadKitsSelected(quote.details);
         setIsLoading(true);
-    }, [quote, setDolarValue, setLaborCost, setAdvancePayment, kitsSelected, productsSelected, loadProductsSelected, loadKitsSelected]);   
+    }, [quote, setDolarValue, setLaborCost, setAdvancePayment, loadProductsSelected, loadKitsSelected]);   
 
     const calculateTotalProduct = (product: Product, quantity: number) => {
         return formatNumber(product.price * dolarValue * quantity, 2); 
