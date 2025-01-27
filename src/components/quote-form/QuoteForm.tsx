@@ -23,6 +23,9 @@ export const QuoteForm = ({quote}: Props) => {
     const productsSelected = useProductStore((store) => store.productsSelected);
     const removeProductFromSelected = useProductStore((store) => store.removeProductFromSelected);
 
+    const loadProductsSelected = useProductStore((store) => store.loadProductsSelected);
+    const loadKitsSelected = useKitsStore((store) => store.loadKitsSelected);
+
     const kitsSelected = useKitsStore((store) => store.kitsSelected);
     const removeKitFromSelected = useKitsStore((store) => store.removeKitFromSelected);
 
@@ -44,17 +47,21 @@ export const QuoteForm = ({quote}: Props) => {
     const emptyKitsSelected = useKitsStore((store) => store.emptyKitsSelected);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); 
     
     const router = useRouter();
 
     useEffect(() => {
-        if (!quote) return;
+        if (!quote) {
+            return setIsLoading(true);
+        }
         setDolarValue(quote.dolar_value);
         setLaborCost(quote.labor_cost);
         setAdvancePayment(quote.advance_payment);
-    }, [quote, setDolarValue, setLaborCost, setAdvancePayment]);   
-
-    useEffect(() => {}, [productsSelected])
+        loadProductsSelected(quote.details);
+        loadKitsSelected(quote.details);
+        setIsLoading(true);
+    }, [quote, setDolarValue, setLaborCost, setAdvancePayment, kitsSelected, productsSelected, loadProductsSelected, loadKitsSelected]);   
 
     const calculateTotalProduct = (product: Product, quantity: number) => {
         return formatNumber(product.price * dolarValue * quantity, 2); 
@@ -116,7 +123,7 @@ export const QuoteForm = ({quote}: Props) => {
             total_amount: calculateTotal()
         });
 
-        const resp = await editQuoteDetails(productsSelected, quote.id);
+        const resp = await editQuoteDetails(kitsSelected, productsSelected, quote.id);
         
         emptyProductsSelected()
 
@@ -124,8 +131,8 @@ export const QuoteForm = ({quote}: Props) => {
             router.push(`/quotes/view/${quote.id}`);
     }
 
-    const showProductsModal = () => {
-        setIsModalOpen(true);
+    if (!isLoading) {
+        return <p>Cargando...</p>
     }
 
     return (
@@ -177,7 +184,7 @@ export const QuoteForm = ({quote}: Props) => {
                             >
                                 <td className="p-4 pl-6 flex items-start gap-2 flex-col">
                                     <div className='flex items-center justify-start gap-2'>
-                                        {k.name.toUpperCase()} 
+                                        {k.name} 
                                         <span onClick={() => handleDeselectKit(k.id)}>
                                             <FaRegTrashAlt className="text-red-500 hover:cursor-pointer hover:underline transition hover:scale-125 hover:text-red-600"/>
                                         </span>

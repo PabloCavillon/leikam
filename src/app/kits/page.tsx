@@ -1,14 +1,12 @@
 'use client'
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useKitsStore } from "@/store";
 import { getAllKits } from "@/actions";
 import { formatNumber } from '../../util/format-number';
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { FaPlus } from "react-icons/fa";
 import { MdOutlineRequestQuote } from "react-icons/md";
-import { LuPackage } from "react-icons/lu";
 import clsx from "clsx";
 
 export default function PromocionalKitsPage() {

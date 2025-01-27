@@ -1,18 +1,19 @@
-import { Kit } from "@/interfaces";
+import { Kit, QuoteDetail } from "@/interfaces";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface KitWtihQuantity extends Kit {
+interface KitWithQuantity extends Kit {
     quantity: number;
 }
 
 interface State {
     kitsList: Kit[];
-    kitsSelected: KitWtihQuantity[];
+    kitsSelected: KitWithQuantity[];
 
     loadKitsList: (kits: Kit[]) => void;
     
     verifyKitIsSelected: (id: string) => boolean;
+    loadKitsSelected: (quoteDetail:QuoteDetail[]) => void;
     addKitToSelected: (kit: Kit, quantity?: number) => void;
     removeKitFromSelected: (id: string) => void;
     updateQuantityKitSelected: (id: string, quantity: number) => void;
@@ -35,6 +36,19 @@ export const useKitsStore = create<State> () (
                     (item) => item.id === id
                 )
             },
+            loadKitsSelected: (quoteDetail:QuoteDetail[]) => {
+                const kits = quoteDetail
+                    .map((item) => {
+                        if (item.kit !== null) {
+                            return { ...item.kit, quantity: item.quantity };
+                        }
+                        return undefined; // Aseguramos que el mapa devuelva un valor explícito
+                    })
+                    .filter((kit): kit is KitWithQuantity => kit !== undefined); // Filtramos los valores undefined
+                
+                set({ kitsSelected: kits });
+            },
+
             addKitToSelected: (kit: Kit, quantity: number = 1) => {
                 const {kitsSelected} = get();
                 const kitInList = kitsSelected.some(

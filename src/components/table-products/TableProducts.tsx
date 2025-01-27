@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import clsx from "clsx";
 
 import { getAllProducts } from "@/actions";
@@ -10,7 +9,6 @@ import { useProductStore } from "@/store";
 
 import { Product } from "@/interfaces";
 import { useRouter } from "next/navigation";
-import { FaRegTrashAlt } from "react-icons/fa";
 
 interface ProductWithQuantity extends Product {
     quantity: number;

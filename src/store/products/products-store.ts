@@ -1,4 +1,4 @@
-import { Product } from "@/interfaces";
+import { Product, QuoteDetail } from "@/interfaces";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -20,6 +20,7 @@ interface State {
     addProductToList: (product: Product) => void;
     removeProductToList: (id: string) => void;
     
+    loadProductsSelected: (quoteDetail:QuoteDetail[]) => void;
     verifyProductIsSelected: (id: string) => boolean;
     addProductToSelected: (product: Product, quantity?: number) => void;
     removeProductFromSelected: (id: string) => void;
@@ -65,6 +66,19 @@ export const useProductStore = create<State> () (
                 const { productsSelected } = get(); // Verificar en productsSelected
                 const productFound = productsSelected.some((item) => item.id === id);
                 return productFound;
+            },
+
+            loadProductsSelected: (quoteDetail:QuoteDetail[]) => {
+                const products = quoteDetail
+                .map((item) => {
+                    if (item.product !== null) {
+                        return { ...item.product, quantity: item.quantity };
+                    }
+                    return undefined; // Aseguramos que el mapa devuelva un valor explícito
+                })
+                .filter((product): product is ProductWithQuantity => product !== undefined); // Filtramos los valores undefined
+        
+                set({ productsSelected: products });
             },
 
             addProductToSelected: (product: Product, quantity: number = 1) => {

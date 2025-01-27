@@ -1,6 +1,6 @@
 'use server'
 
-import { Product } from "@/interfaces"
+import { Kit, Product } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
 
@@ -8,15 +8,12 @@ interface ProductWithQuantity extends Product{
     quantity: number;
 }
 
-interface QuoteDetailWithId {
-    id: string;
-    quote_id: string;
-    product_id: string;
+
+interface KitWithQuantity extends Kit{
     quantity: number;
-    unit_price: number;
 }
 
-export const editQuoteDetails = async (products: ProductWithQuantity[], quote_id: string) => {
+export const editQuoteDetails = async (kits: KitWithQuantity[], products: ProductWithQuantity[], quote_id: string) => {
     
     try {
 
@@ -31,7 +28,7 @@ export const editQuoteDetails = async (products: ProductWithQuantity[], quote_id
             const quote_detail = await prisma.quote_Details.findFirst({
                 where: {
                     quote_id: quote_id, 
-                    product_id: product.id
+                    product_id: product.id 
                 }
             })
             
@@ -45,7 +42,7 @@ export const editQuoteDetails = async (products: ProductWithQuantity[], quote_id
                         unit_price: product.price
                     }
                 })
-                quote_details = quote_details.filter((qd:QuoteDetailWithId) => qd.id !== quote_detail.id)
+                quote_details = quote_details.filter(quote => quote.id !== quote_detail.id)
             } else {
                 await prisma.quote_Details.create({
                     data: {
@@ -53,6 +50,37 @@ export const editQuoteDetails = async (products: ProductWithQuantity[], quote_id
                         product_id: product.id,
                         quantity: product.quantity,
                         unit_price: product.price
+                    }
+                })
+            }
+        }
+
+        for (const kit of kits) {
+            const quote_detail = await prisma.quote_Details.findFirst({
+                where: {
+                    quote_id: quote_id, 
+                    kit_id: kit.id 
+                }
+            })
+            
+            if (quote_detail) {
+                await prisma.quote_Details.update({
+                    where: {
+                        id: quote_detail.id
+                    },
+                    data: {
+                        quantity: kit.quantity,
+                        unit_price: kit.price
+                    }
+                })
+                quote_details = quote_details.filter(quote => quote.id !== quote_detail.id)
+            } else {
+                await prisma.quote_Details.create({
+                    data: {
+                        quote_id: quote_id,
+                        kit_id: kit.id,
+                        quantity: kit.quantity,
+                        unit_price: kit.price
                     }
                 })
             }

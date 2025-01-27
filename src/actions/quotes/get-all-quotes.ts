@@ -1,6 +1,6 @@
 'use server'
 
-import { Quote, State } from '@/interfaces';
+import { Quote } from '@/interfaces';
 import prisma from '@/lib/prisma';
 import { getAllDetailsByQuoteId } from '@/actions';
 

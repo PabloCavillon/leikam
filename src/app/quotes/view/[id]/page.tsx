@@ -124,7 +124,7 @@ export default function ViewQuotePage({ params }: { params: Params }) {
                                     className="bg-gray-800 hover:bg-gray-700 transition border-b border-gray-700"
                                 >
                                     <td className="p-4 pl-6 flex items-center gap-2">
-                                        {qd.product && (
+                                        {(qd.product !== null) && (
                                             <Link
                                                 href={`/product/${qd.product.slug}`}
                                                 className="text-orange-500 hover:underline transition"
@@ -132,7 +132,7 @@ export default function ViewQuotePage({ params }: { params: Params }) {
                                                 {qd.product.name}
                                             </Link>
                                         )}
-                                        {qd.kit && (
+                                        {(qd.kit !== null) && (
                                             <div>
                                                 <Link
                                                     href={`/kits/${qd.kit.id}`}
